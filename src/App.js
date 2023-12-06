@@ -6,21 +6,18 @@ import ProtectedRoute from "./pages/ProtectedRoute";
 import Signup from "./Components/LoginSignupSection/Signup/Signup";
 import Login from "./Components/LoginSignupSection/Login/Login";
 import { CurrentUser } from "./Services/UserService";
-import {useRecoilState} from 'recoil'
-import { loginState } from './State/atoms/loginState'
-import {useEffect} from 'react'
-
+import { useRecoilState } from "recoil";
+import { loginState } from "./State/atoms/loginState";
 
 function App() {
-
   return (
     <Router>
       <div className="App">
         <Routes>
           <Route path="/" element={<Join />} />
           <Route path="/join" element={<Join />} />
-          <Route path="/join/signup" element={<Signup/>} />
-          <Route path="/join/login" element={<Login/>} />
+          <Route path="/join/signup" element={<Signup />} />
+          <Route path="/join/login" element={<Login />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/main" element={<Main />} />
           </Route>
