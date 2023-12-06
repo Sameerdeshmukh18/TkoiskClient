@@ -1,0 +1,99 @@
+.signup-container {
+    background: #fff;
+    height: 480px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    margin: 100px auto;
+  }
+  .floating-icon img{
+    max-width: 40px;
+    max-height: 40px;
+  }
+  .floating-icon{
+    background-color: white;
+  }
+  
+  h1 {
+    margin: 0;
+    padding: 10px 0;
+  }
+  
+  .signup-username,
+  .signup-email,
+  .signup-dob,
+  .signup-password {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background: #3494E6;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .dob-container {
+    position: relative;
+    width: 100%; /* Reduce the width as needed */
+    padding: 0; /* Remove padding to reduce size */
+    margin-top: 20px;
+
+  }
+  
+  .dob-container label {
+    position: absolute;
+    top: -15px;
+    left: 0px;
+    color: #999;
+    pointer-events: none;
+    transition: 0.2s ease-out;
+  }
+  
+  .dob-container input[type="date"] {
+    width: 100%;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    appearance: none;
+  }
+  
+  .dob-container input[type="date"]::-webkit-inner-spin-button,
+  .dob-container input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+  
+  .dob-container input[type="date"]:focus + label,
+  .dob-container input[type="date"]:valid + label {
+    top: -25px;
+    left: 10px;
+    font-size: 12px;
+    color: #3494E6;
+  }
+
+  .extra-links {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .extra-links p {
+    text-decoration: none;
+    color: #000000;
+    margin: 0 5px;
+  }
+  .extra-links a{
+    text-decoration: none;
+    color: #3494E6;
+    margin: 0 5px;
+
+  }

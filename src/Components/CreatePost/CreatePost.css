@@ -1,0 +1,76 @@
+.post-box{
+    height: 100px;
+    max-height: 500px;
+    margin: 60px 0 0 0;
+    display: flex;
+    flex-direction: row;
+    background-color: #ffff;
+    height: max-content;
+    overflow: hidden;
+    border: 2px solid rgb(0, 0, 0);
+    border-bottom: none;
+    border-top: none;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow: visible;
+    
+}
+.profile-pic-box{
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+    overflow: hidden;
+}
+.post-inputs{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: center;
+    position: relative;
+    
+    
+}
+.post-items{
+    padding: 5px;
+    border-top: solid black 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.input-text-post{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-align: left;
+    background-color: white;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    resize: none;
+}
+.post-btn{
+    width: 80px;
+    height: 40px;
+    font-size: small;
+    border-radius: 30px;
+    font-weight: bold;
+}
+aside{
+    overflow: clip;
+}
+.post-btn:hover{
+    background-color: #075da9;
+
+}
+em-emoji-picker{
+    position: absolute;
+    z-index: 3;
+    
+}
+#autoresizing{
+    display: block;
+    overflow: hidden;
+    resize: none;
+}
