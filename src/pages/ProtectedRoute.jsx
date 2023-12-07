@@ -1,30 +1,36 @@
 import React from 'react'
-import { Navigate, Outlet, useNavigate } from 'react-router-dom'
-import { CurrentUser } from '../Services/UserService'
-import { useEffect, useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { authenticate } from '../Services/UserService'
+import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { loginState } from '../State/atoms/loginState'
-import Join from './Join/Join'
+
 
 function ProtectedRoute() {
-
-    const [isLoggedIn, setisLoggedIn] = useRecoilState(loginState)
-    const [status, setStatus] = useState(false);
-    const [isLoading, setisLoading] = useState(false)
     const nav = useNavigate();
+    const [isLoggedIn, setisLoggedIn] = useRecoilState(loginState)
 
     useEffect(() => {
-        setisLoggedIn(true);
-    }, [isLoggedIn])
 
+        const checkAuthenticate = async () => {
+            const status = await authenticate()
+            if (status === true) {
 
-    if (!isLoggedIn) {
-        return nav("/join");
-    }
-    else {
+                setisLoggedIn(true)
+            }
+            else{
+                nav("/join")
+            }
+        }
+        checkAuthenticate()
+
+    }, [])
+
+    if (isLoggedIn) {
         return <Outlet />
-
     }
+
+
 
 
 }

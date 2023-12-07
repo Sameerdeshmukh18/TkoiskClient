@@ -51,9 +51,9 @@ function Post() {
 
                 </div>
                 <div className="post-actions">
-                    <div className="like action-icon"><i class="bi bi-heart"></i></div>
-                    <div className="share action-icon"><i class="bi bi-chat"></i></div>
-                    <div className="comment action-icon"><i class="bi bi-share"></i></div>
+                    <div className="like action-icon"><i className="bi bi-heart"></i></div>
+                    <div className="share action-icon"><i className="bi bi-chat"></i></div>
+                    <div className="comment action-icon"><i className="bi bi-share"></i></div>
                 </div>
             </div>
         </div>

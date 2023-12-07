@@ -7,7 +7,6 @@ import SearchSection from '../../Components/SearchSection/SearchSection'
 
 function Main() {
   useEffect(() => {
-    console.log('main')
   }, [])
   
     

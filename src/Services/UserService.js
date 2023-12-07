@@ -47,3 +47,22 @@ export const CurrentUser = async()=>{
   
 }
 
+export const authenticate = async()=>{
+
+  const response = await fetch(`${process.env.REACT_APP_API_URL}users/current`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization":`Bearer ${sessionStorage.getItem("authToken")}`,
+    }
+  });
+  
+  if(response.status === 200){
+    return true
+  }
+  else{
+    return false
+  }
+
+}
+
