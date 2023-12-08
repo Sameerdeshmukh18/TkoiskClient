@@ -16,16 +16,16 @@
     "react-emoji-picker": "^1.0.13",
     "react-loading-skeleton": "^3.3.1",
     "react-router-dom": "^6.18.0",
-    "react-scripts": "5.0.1",
     "recoil": "^0.7.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start:qa": "env-cmd -f .env.qa react-scripts start",
-    "start:prod": "env-cmd -f .env.production react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start:qa": "env-cmd -f .env.qa vite",
+    "start:prod": "env-cmd -f .env.production vite",
+    "build": "vite build",
+    "test": "vite test",
+    "eject": "vite eject",
+    "serve": "vite preview"
   },
   "eslintConfig": {
     "extends": [
@@ -44,5 +44,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.0.7",
+    "vite-plugin-svgr": "^4.2.0",
+    "vite-tsconfig-paths": "^4.2.2"
   }
 }
