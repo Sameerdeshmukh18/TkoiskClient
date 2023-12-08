@@ -11,6 +11,16 @@ export const postTweet = async (tweet) => {
     }),
   });
   return response;
+}
 
+export const homeTimeline = async () => {
 
+  const response = await fetch(`${import.meta.env.VITE_API_URL}homeTimeline`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${sessionStorage.getItem("authToken")}`,
+    },
+  });
+  return response;
 }

@@ -9,7 +9,6 @@ function Main() {
   useEffect(() => {
   }, [])
   
-    
   return (
     <>
           <Sidebar/>
