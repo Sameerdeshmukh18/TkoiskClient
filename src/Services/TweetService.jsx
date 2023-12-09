@@ -15,7 +15,7 @@ export const postTweet = async (tweet) => {
 
 export const homeTimeline = async () => {
 
-  const response = await fetch(`${import.meta.env.VITE_API_URL}homeTimeline`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}tweets/homeTimeline`, {
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
