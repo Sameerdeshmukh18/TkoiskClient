@@ -18,11 +18,21 @@ function Home() {
     e.target.classList.add("active");
 
   }
+  const getUser = async (id) => {
+    const response = await getUserDetails(id);
+    return response;
+  }
 
   const getHomeTimeline = async () => {
     const response = await homeTimeline();
-    const data = await response.json();
-    console.log(data);
+    let data = await response.json();
+    
+    data.forEach(async(post) => {
+      const response = await getUser(post.user_id);
+      const data = await response.json();
+      post["user"]=data;
+    });
+    
     setPostList(data);
   }
 

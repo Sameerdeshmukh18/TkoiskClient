@@ -11,8 +11,10 @@ import { getUserDetails } from '../../Services/UserService'
 function Post(props) {
 
     const data = props.data;
-
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const isLikedTemp = data.liked_by.includes(localStorage.getItem('user_id'));
+    const [likeCount, setlikeCount] = useState(0);
+    const [isLiked,setisLiked] = useState(isLikedTemp)
     const [user, setUser] = useState({
         "name": "user",
         "username": "username",
@@ -24,23 +26,33 @@ function Post(props) {
     };
 
     const like_Tweet = async (id) => {
+
+        setisLiked(true);
         const response = await likeTweet(id);
-        console.log(response);
+        if(response.ok){
+            setlikeCount(likeCount+1);
+            console.log(response);
+        }
     }
 
     const disLike_Tweet = async (id) => {
+        setisLiked(false);
         const response = await dislikeTweet(id);
-        console.log(response);
-    }
-
-    const getUser = async (id) => {
-        const response = await getUserDetails(id);
-        const data = await response.json();
-        setUser(data);
+        if(response.ok){
+            setlikeCount(likeCount-1);
+            console.log(response);
+        }
+        
     }
 
     useEffect(() => {
-        getUser(data.user_id);
+        setlikeCount(data.liked_by.length);
+        // setUser({
+        //     "name": data.user.name,
+        //     "username": data.user.username,
+        //     "isVerified": data.user.isVerified
+        // });
+        console.log(data.user);
     }, [data])
 
 
@@ -83,11 +95,11 @@ function Post(props) {
                 </div>
                 <div className="post-actions">
 
-                    {data.liked_by.includes(localStorage.getItem('user_id'))
+                    {isLiked
                         ?
-                        <div className='like action-icon' onClick={() => disLike_Tweet(data._id)}  > <i className="bi bi-heart-fill" style={{ color: 'red' }} ></i> {data.liked_by.length}</div>
+                        <div className='like action-icon' onClick={() => disLike_Tweet(data._id)}  > <i className="bi bi-heart-fill" style={{ color: 'red' }} ></i> {likeCount}</div>
                         :
-                        <div className="like action-icon" onClick={() => like_Tweet(data._id)}  > <i className="bi bi-heart" ></i> {data.liked_by.length}</div>
+                        <div className="like action-icon" onClick={() => like_Tweet(data._id)}  > <i className="bi bi-heart" ></i> {likeCount}</div>
                     }
 
                     <div className="share action-icon"><i className="bi bi-chat"></i></div>
