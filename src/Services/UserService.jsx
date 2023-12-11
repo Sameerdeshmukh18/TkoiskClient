@@ -66,3 +66,13 @@ export const authenticate = async () => {
 
 }
 
+export const getUserDetails = async (id) => {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}users/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  });
+  return response;
+}
+

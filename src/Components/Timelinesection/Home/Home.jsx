@@ -4,10 +4,11 @@ import CreatePost from "../../CreatePost/CreatePost";
 import Post from "../../Post/Post";
 import PostSkeleton from "../../Post/PostSkeleton";
 import { homeTimeline } from "../../../Services/TweetService";
+import { getUserDetails } from "../../../Services/UserService";
 
 function Home() {
 
-  const [postList, setPostList] = useState(false);
+  const [postList, setPostList] = useState([]);
 
   const addActiveClass = (e) => {
     let elements = document.getElementsByClassName('tab');
@@ -22,13 +23,11 @@ function Home() {
     const response = await homeTimeline();
     const data = await response.json();
     console.log(data);
+    setPostList(data);
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      setPostList(true);
-      getHomeTimeline();
-    }, 2000);
+    getHomeTimeline();
   }, [])
 
   return (
@@ -38,13 +37,11 @@ function Home() {
         <div id="following" className="following tab" onClick={addActiveClass}>Following</div>
       </div>
       <CreatePost />
-      {postList ? <Post /> : <PostSkeleton />}
-      {/* <Post />
-      <PostSkeleton />
-      <PostSkeleton />
-      <PostSkeleton />
-      <PostSkeleton />
-      <PostSkeleton /> */}
+      {postList.length > 0 ?
+        postList.map((post) => {
+          return <Post data={post} key={post._id} />
+        })
+        : <PostSkeleton />}
 
     </div>
   );

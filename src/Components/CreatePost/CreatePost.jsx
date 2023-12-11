@@ -33,9 +33,11 @@ function CreatePost() {
     const handleClick = async () => {
         setisLoading(true);
         const response = await postTweet(postContent.postText);
+        console.log(response);
         if (response.status == 201) {
             setpostContent({ postText: "" })
             setisLoading(false);
+
         }
     }
 

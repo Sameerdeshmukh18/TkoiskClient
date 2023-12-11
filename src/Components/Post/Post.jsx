@@ -1,21 +1,49 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import './Post.css'
 import profilepic from "../../Assets/profilepic.jpg"
-import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import verified_sign from "../../Assets/verify.png"
 import MoreActions from '../MoreActions/MoreActions'
+import { likeTweet, dislikeTweet } from '../../Services/TweetService'
+import { getUserDetails } from '../../Services/UserService'
 
 
+function Post(props) {
 
+    const data = props.data;
 
-
-function Post() {
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [user, setUser] = useState({
+        "name": "user",
+        "username": "username",
+        "isVerified": false
+    });
 
     const togglePopup = () => {
         setPopupOpen(!isPopupOpen);
     };
+
+    const like_Tweet = async (id) => {
+        const response = await likeTweet(id);
+        console.log(response);
+    }
+
+    const disLike_Tweet = async (id) => {
+        const response = await dislikeTweet(id);
+        console.log(response);
+    }
+
+    const getUser = async (id) => {
+        const response = await getUserDetails(id);
+        const data = await response.json();
+        setUser(data);
+    }
+
+    useEffect(() => {
+        getUser(data.user_id);
+    }, [data])
+
+
     return (
         <div className='post'>
 
@@ -27,9 +55,14 @@ function Post() {
             <div className="post-info">
                 <div className="post-profile-info">
                     <div className="username-verfied-box">
-                        <div className="creator-name">Virat Kohli</div>
-                        <div className="verified"><img src={verified_sign} alt="" className="verified-sign-img" /></div>
-                        <div className="creator-username">@vkohli18</div>
+                        <div className="creator-name">{user.name}</div>
+                        {user.isVerified
+                            ?
+                            <div className="verified"><img src={verified_sign} alt="" className="verified-sign-img" /></div>
+                            :
+                            null
+                        }
+                        <div className="creator-username">{user.username}</div>
                     </div>
 
 
@@ -38,20 +71,25 @@ function Post() {
                     </div>
 
                     {isPopupOpen && (
-                        <MoreActions/>
+                        <MoreActions />
                     )}
 
                 </div>
                 <div className="main-content">
                     <p>
-                        I am thrilled to announce that one8 Commune is now coming to Gurgaon, and you're invited to be part of this incredible journey! Join us in the spirit of communing from Sept 23 as we can't wait to share the love with you all! #ad #one8commune @one8world
+                        {data.tweet_text}
                     </p>
-
-
 
                 </div>
                 <div className="post-actions">
-                    <div className="like action-icon"><i className="bi bi-heart"></i></div>
+
+                    {data.liked_by.includes(localStorage.getItem('user_id'))
+                        ?
+                        <div className='like action-icon' onClick={() => disLike_Tweet(data._id)}  > <i className="bi bi-heart-fill" style={{ color: 'red' }} ></i> {data.liked_by.length}</div>
+                        :
+                        <div className="like action-icon" onClick={() => like_Tweet(data._id)}  > <i className="bi bi-heart" ></i> {data.liked_by.length}</div>
+                    }
+
                     <div className="share action-icon"><i className="bi bi-chat"></i></div>
                     <div className="comment action-icon"><i className="bi bi-share"></i></div>
                 </div>
