@@ -21,7 +21,7 @@
     margin: 0;
     padding: 10px 0;
   }
-  
+  .signup-name,
   .signup-username,
   .signup-email,
   .signup-dob,
@@ -96,4 +96,24 @@
     color: #3494E6;
     margin: 0 5px;
 
+  }
+  .error-text{
+    color: red;
+    font-size: small;
+    margin-top: 0px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .error-text i{
+    margin-right: 5px;
+  }
+  .success-text{
+    color: green;
+    font-size: small;
+    margin-top: 0px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .success-text i{
+    margin-right: 5px;
   }

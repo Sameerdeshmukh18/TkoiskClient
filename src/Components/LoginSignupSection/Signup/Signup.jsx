@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { createUser } from "../../../Services/UserService"
+import React, {useState} from 'react'
+import { checkUsernameAvailability, createUser } from "../../../Services/UserService"
 import "./Signup.css"
 import { useRecoilState } from 'recoil'
 import { loginState } from '../../../State/atoms/loginState'
@@ -8,8 +8,9 @@ import { Link, useNavigate } from 'react-router-dom'
 
 
 function Signup() {
-  const [credentials, setcredentials] = useState({ username: "", email: "", dob: "", password: "" });
-  const [isLoggedIn, setisLoggedIn] = useRecoilState(loginState)
+  const [credentials, setcredentials] = useState({ name: "", username: "", email: "", dob: "", password: "" });
+  const [isLoggedIn, setisLoggedIn] = useRecoilState(loginState);
+  const [showAvailability,setshowAvailability] = useState(true);
   const [isLoading, setisLoading] = useState(false)
   const [errMsg, seterrMsg] = useState(null)
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     setisLoading(true)
     e.preventDefault();
-    const response = await createUser(credentials.username, credentials.email, credentials.dob, credentials.password)
+    const response = await createUser(credentials.name,credentials.username, credentials.email, credentials.dob, credentials.password)
     const json = await response.json()
     if (json.authToken) {
       sessionStorage.setItem('authToken', json.authToken);
@@ -34,10 +35,22 @@ function Signup() {
 
     }
   }
-  const onChange = (e) => {
+  const onChange = async(e) => {
     setisLoading(false)
     setcredentials({ ...credentials, [e.target.name]: e.target.value });
+    if(e.target.name==="username"){
+      const username = e.target.value
+      if(!username){
+        setshowAvailability(true)
+
+      }
+      const availability = await checkUsernameAvailability(username);
+      setshowAvailability(availability);
+    }
   };
+
+
+  
   return (
     <div className="App">
       <div className="signup-container">
@@ -54,8 +67,11 @@ function Signup() {
           </div>
         </div>:
           errMsg}
-          <input className="signup-username" type="text" name="username" placeholder="Full Name" value={credentials.username} onChange={onChange} required />
+          <input className="signup-name" type="text" name="name" placeholder="Full Name" value={credentials.name} onChange={onChange} required />
           <input className="signup-email" type="email" name="email" placeholder="Email" value={credentials.email} onChange={onChange} required />
+          <input className="signup-username" type="text" name="username" placeholder="Username" value={credentials.username} onChange={onChange} required />
+          {showAvailability?<p className='success-text'><i class="bi bi-check2-circle"></i> Username is available</p>:<p className='error-text'><i class="bi bi-person-fill-x"></i>Username is Already taken!</p>}
+          
           <div className="dob-container">
             <label htmlFor="dob">Date of Birth</label>
             <input className="signup-dob" type="date" id="dob" name="dob" value={credentials.dob} onChange={onChange} required />

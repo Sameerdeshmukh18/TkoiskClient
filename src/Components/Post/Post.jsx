@@ -62,7 +62,7 @@ function Post(props) {
                             :
                             null
                         }
-                        <div className="creator-username">{user.username}</div>
+                        <div className="creator-username">@{user.username}</div>
                     </div>
 
 

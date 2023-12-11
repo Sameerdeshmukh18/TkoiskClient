@@ -1,5 +1,5 @@
 
-export const createUser = async (username, email, dob, password) => {
+export const createUser = async (name,username, email, dob, password) => {
 
   const response = await fetch(`${import.meta.env.VITE_API_URL}users/register`, {
     method: "POST",
@@ -7,6 +7,7 @@ export const createUser = async (username, email, dob, password) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      name,
       username,
       email,
       dob,
@@ -74,5 +75,20 @@ export const getUserDetails = async (id) => {
     }
   });
   return response;
+}
+
+export const checkUsernameAvailability = async (username) =>{
+  const response = await fetch(`${import.meta.env.VITE_API_URL}users/checkUsername/${username}`,{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  });
+  if(response.status===200){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 

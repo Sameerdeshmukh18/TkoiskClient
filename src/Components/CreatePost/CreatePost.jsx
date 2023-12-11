@@ -50,7 +50,7 @@ function CreatePost() {
                 <textarea className="input-text-post" id='autoresizing' placeholder='What say?!' name="postText" value={postContent.postText} onChange={onChange} />
                 <div className="post-items">
                     <span onClick={() => { setEnambleemojiPicker(!enableEmojiPicker) }}><i className="bi bi-emoji-smile"></i></span>
-                    <button className='post-btn' onClick={handleClick}>
+                    <button className='post-btn' onClick={handleClick} disabled={!postContent.postText}>
                         {isLoading ?
                             <div className="spinner-border spinner-border-sm text-light" role="status">
                                 <span className="visually-hidden">Loading...</span>

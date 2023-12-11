@@ -1,0 +1,8 @@
+.profilepopup {
+    color: black;
+}
+
+.logout:hover {
+    background-color: rgba(216, 216, 216, 0.7);
+    cursor: pointer;
+}

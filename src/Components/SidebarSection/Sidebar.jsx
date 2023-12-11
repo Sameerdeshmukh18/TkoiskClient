@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Sidebar.css";
 import profilepic from "../../Assets/profilepic.jpg"
 import logo from "../../Assets/Zoomed_Logo.png"
+import ProfileMoreActions from "./ProfileMoreActions";
 
 function Sidebar() {
   const [isMorePopupOpen, setMorePopupOpen] = useState(false);
@@ -56,11 +57,9 @@ function Sidebar() {
         </ul>
       </div>
       {isMorePopupOpen && (
-        <div className="profilepopup top-popup">
-          {/* Popup content for "More" item goes here */}
-          <p>This is the popup content for "More".</p>
-          {/* You can add more elements as needed */}
-        </div>
+
+        <ProfileMoreActions/>
+        
       )}
       <div className="profile-bar" onClick={toggleMorePopup}>
         <img src={profilepic} alt="Profile" className="profile-pic" />
