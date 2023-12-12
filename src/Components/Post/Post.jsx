@@ -14,7 +14,7 @@ function Post(props) {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const isLikedTemp = data.liked_by.includes(localStorage.getItem('user_id'));
     const [likeCount, setlikeCount] = useState(0);
-    const [isLiked,setisLiked] = useState(isLikedTemp)
+    const [isLiked, setisLiked] = useState(isLikedTemp)
     const [user, setUser] = useState({
         "name": "user",
         "username": "username",
@@ -29,8 +29,8 @@ function Post(props) {
 
         setisLiked(true);
         const response = await likeTweet(id);
-        if(response.ok){
-            setlikeCount(likeCount+1);
+        if (response.ok) {
+            setlikeCount(likeCount + 1);
             console.log(response);
         }
     }
@@ -38,24 +38,20 @@ function Post(props) {
     const disLike_Tweet = async (id) => {
         setisLiked(false);
         const response = await dislikeTweet(id);
-        if(response.ok){
-            setlikeCount(likeCount-1);
+        if (response.ok) {
+            setlikeCount(likeCount - 1);
             console.log(response);
         }
-        
+
     }
 
     useEffect(() => {
         setlikeCount(data.liked_by.length);
-        // setUser({
-        //     "name": data.user.name,
-        //     "username": data.user.username,
-        //     "isVerified": data.user.isVerified
-        // });
+        setUser(data.user);
         console.log(data.user);
     }, [data])
 
-
+    
     return (
         <div className='post'>
 

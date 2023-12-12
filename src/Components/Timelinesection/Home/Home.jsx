@@ -26,13 +26,19 @@ function Home() {
   const getHomeTimeline = async () => {
     const response = await homeTimeline();
     let data = await response.json();
-    
-    data.forEach(async(post) => {
-      const response = await getUser(post.user_id);
-      const data = await response.json();
-      post["user"]=data;
+
+    const userPromises = data.map(async (post) => {
+      const userResponse = await getUser(post.user_id);
+      return await userResponse.json();
     });
-    
+
+    const userData = await Promise.all(userPromises);
+
+    // Combine user data with posts
+    data.forEach((post, index) => {
+      post.user = userData[index];
+    });
+
     setPostList(data);
   }
 
