@@ -1,90 +1,87 @@
-.post{
-    background-color: white;
-    height: max-content;
-    width: 100%;
-    border: 2px solid rgb(0, 0, 0);
-    display: flex;
-    flex-direction: row;
-    border-bottom: none;
+.post {
+  background-color: white;
+  height: max-content;
+  width: 100%;
+  border: 2px solid rgb(0, 0, 0);
+  display: flex;
+  flex-direction: row;
+  border-bottom: none;
 }
-.post-info{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: space-around;
-
-}
-
-
-.profile-pic-icon{
-    width: 10%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: 10px;
-    overflow: hidden;
-    
-}
-.post-profile-info{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 10px;
-    position: relative;
-}
-.main-content{
-    margin-top: 10px;
-    text-align: justify;
-    margin-right: 15px;
-}
-.post-actions{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin-bottom: 10px;
-    
-
-}
-.creator-name{
-    align-self: flex-start;
-}
-.verified-sign-img{
-    max-width: 18px;
-}
-.verified{
-    display: flex;
-    align-items: center;
-    margin-top: 2px;
-}
-.username-verfied-box{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.creator-name{
-    font-weight: bold;
-
-}
-.creator-username{
-    margin-left: 10px;
-    color: rgb(105, 104, 104);
-}
-.more-icon{
-    margin-right: 20px;
-    border-radius: 10px;
-    padding: 0 2px 0 2px;
-}
-.more-icon:hover{
-    background-color: rgba(216, 216, 216, 0.7);
-    cursor: pointer;
-}
-.like:hover{
-    color: red;
-    cursor: pointer;
-    filter: drop-shadow(0 0 0.75rem crimson);
+.post-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-around;
 }
 
+.profile-pic-icon {
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 10px;
+  overflow: hidden;
+}
+.post-profile-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  position: relative;
+}
+.main-content {
+  margin-top: 10px;
+  text-align: justify;
+  margin-right: 15px;
+}
+.post-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+.creator-name {
+  align-self: flex-start;
+}
+.verified-sign-img {
+  max-width: 18px;
+}
+.verified {
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+.username-verfied-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.creator-name {
+  font-weight: bold;
+}
+.creator-username {
+  margin-left: 10px;
+  color: rgb(105, 104, 104);
+}
+.more-icon {
+  margin-right: 20px;
+  border-radius: 10px;
+  padding: 0 2px 0 2px;
+}
+.more-icon:hover {
+  background-color: rgba(216, 216, 216, 0.7);
+  cursor: pointer;
+}
+.like:hover {
+  color: red;
+  cursor: pointer;
+  filter: drop-shadow(0 0 0.75rem crimson);
+}
 
-
+.comment:hover {
+  color: blue;
+  cursor: pointer;
+  filter: drop-shadow(0 0 0.75rem blue);
+}
