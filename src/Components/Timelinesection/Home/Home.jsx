@@ -4,7 +4,6 @@ import CreatePost from "../../CreatePost/CreatePost";
 import Post from "../../Post/Post";
 import PostSkeleton from "../../Post/PostSkeleton";
 import { homeTimeline } from "../../../Services/TweetService";
-import { getUserDetails } from "../../../Services/UserService";
 
 function Home() {
 
@@ -18,26 +17,10 @@ function Home() {
     e.target.classList.add("active");
 
   }
-  const getUser = async (id) => {
-    const response = await getUserDetails(id);
-    return response;
-  }
 
   const getHomeTimeline = async () => {
     const response = await homeTimeline();
     let data = await response.json();
-
-    const userPromises = data.map(async (post) => {
-      const userResponse = await getUser(post.user_id);
-      return await userResponse.json();
-    });
-
-    const userData = await Promise.all(userPromises);
-
-    // Combine user data with posts
-    data.forEach((post, index) => {
-      post.user = userData[index];
-    });
 
     setPostList(data);
   }

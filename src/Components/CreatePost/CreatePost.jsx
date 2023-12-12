@@ -13,7 +13,6 @@ function CreatePost() {
 
 
     const onChange = (e) => {
-
         setisLoading(false)
         setpostContent({ postText: e.target.value })
         let textarea = document.querySelector("#autoresizing");
@@ -30,14 +29,15 @@ function CreatePost() {
             postText: currentText + e.native
         });
     }
-    const handleClick = async () => {
+    const handleClick = async (e) => {
+        e.preventDefault();
         setisLoading(true);
+        console.log("Tweet text " + postContent.postText);
         const response = await postTweet(postContent.postText);
         console.log(response);
         if (response.status == 201) {
             setpostContent({ postText: "" })
             setisLoading(false);
-
         }
     }
 

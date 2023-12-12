@@ -16,9 +16,9 @@ function Post(props) {
     const [likeCount, setlikeCount] = useState(0);
     const [isLiked, setisLiked] = useState(isLikedTemp)
     const [user, setUser] = useState({
-        "name": "user",
-        "username": "username",
-        "isVerified": false
+        "name": data.name,
+        "username": data.username,
+        "isVerified": data.isVerified
     });
     const [replyText, setReplyText] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -54,12 +54,11 @@ function Post(props) {
 
     useEffect(() => {
         setlikeCount(data.liked_by.length);
-        setUser(data.user);
     }, [data])
 
 
     return (
-        <div className='post'>
+        <div className='post' >
 
             <div className="profile-pic-icon">
                 <img src={profilepic} alt="Profile" className="profile-pic" />
