@@ -5,10 +5,10 @@ function SearchSection() {
   return (
     <div className="SearchSection">
       <div className="searbar-with-result">
-        <div className="search-bar">
+        {/* <div className="search-bar">
           <i className="bi bi-search"></i>
           <input type="text" className="search-input" placeholder="Search" />
-        </div>
+        </div> */}
 
         <div className="result-box" id="resultBox">
           <div className="result-item">Result 1</div>

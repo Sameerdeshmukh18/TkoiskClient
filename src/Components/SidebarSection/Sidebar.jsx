@@ -3,13 +3,19 @@ import "./Sidebar.css";
 import profilepic from "../../Assets/profilepic.jpg"
 import logo from "../../Assets/Zoomed_Logo.png"
 import ProfileMoreActions from "./ProfileMoreActions";
+import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
   const [isMorePopupOpen, setMorePopupOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMorePopup = () => {
     setMorePopupOpen(!isMorePopupOpen);
   };
+
+  const handleExplore = () => {
+    navigate('/main/explore');
+  }
 
   return (
     <div className="sidebar">
@@ -25,7 +31,7 @@ function Sidebar() {
             </div>
           </li>
           <li>
-            <div>
+            <div onClick={handleExplore} >
               <i className="bi bi-search"></i>
               Explore
             </div>
@@ -58,8 +64,8 @@ function Sidebar() {
       </div>
       {isMorePopupOpen && (
 
-        <ProfileMoreActions/>
-        
+        <ProfileMoreActions />
+
       )}
       <div className="profile-bar" onClick={toggleMorePopup}>
         <img src={profilepic} alt="Profile" className="profile-pic" />

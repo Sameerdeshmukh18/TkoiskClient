@@ -26,14 +26,14 @@ function Login() {
       localStorage.setItem('email', userDetails.email);
       localStorage.setItem('user_id', userDetails.id);
       setisLoggedIn(true);
-      navigate("/main")
+      navigate("/main/home")
       setisLoading(false)
     }
     else if (json.message) {
       seterrMsg(json.message)
       setisLoading(false)
     }
-    else{
+    else {
       seterrMsg("something went wrong!")
 
     }
@@ -53,15 +53,15 @@ function Login() {
         <h1>Login</h1>
 
         <form onSubmit={handleSubmit}>
-          {errMsg!==null?
-          <div class="alert alert-danger d-flex align-items-center" role="alert">
-          <i class="bi bi-exclamation-triangle"></i>
-          <div>
-            {errMsg}
-          </div>
-        </div>:
-          errMsg}
-          
+          {errMsg !== null ?
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+              <i class="bi bi-exclamation-triangle"></i>
+              <div>
+                {errMsg}
+              </div>
+            </div> :
+            errMsg}
+
           <input className="login-email" type="email" placeholder="Email" name="email" value={credentials.email} onChange={onChange} required />
           <input className="login-password" type="password" placeholder="Password" name="password" value={credentials.password} onChange={onChange} required />
           <button type="submit">

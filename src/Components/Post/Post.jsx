@@ -108,7 +108,7 @@ function Post(props) {
 
                 </div>
             </div>
-            <Modal show={showModal} onHide={handleClose}>
+            <Modal show={showModal} onHide={handleClose} style={{ borderRadius: '40px' }}>
                 <Modal.Header closeButton className="border-0" style={{ marginRight: 'auto' }} />
                 <Modal.Body >
                     <div className='post border border-1 border-dark'>

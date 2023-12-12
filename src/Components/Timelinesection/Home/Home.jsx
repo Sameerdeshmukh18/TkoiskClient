@@ -58,7 +58,6 @@ function Home() {
           return <Post data={post} key={post._id} />
         })
         : <PostSkeleton />}
-
     </div>
   );
 }

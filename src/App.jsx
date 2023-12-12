@@ -19,7 +19,8 @@ function App() {
           <Route path="/join/signup" element={<Signup />} />
           <Route path="/join/login" element={<Login />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="/main" element={<Main />} />
+            <Route path="/main/home" element={<Main page={'home'} />} />
+            <Route path='/main/explore' element={<Main page={'explore'} />} />
           </Route>
         </Routes>
       </div>
