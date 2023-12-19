@@ -6,6 +6,7 @@ import { CurrentUser, loginUser } from "../../../Services/UserService";
 import { loginState } from '../../../State/atoms/loginState'
 import { Link, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, gql } from '@apollo/client'
+import client from '../../../apolloClient';
 
 function Login() {
   const [credentials, setcredentials] = useState({ email: "", password: "" });
@@ -22,28 +23,30 @@ function Login() {
   }`;
 
   const ME = gql`
-  query Query {
+  query Me {
     me {
+      id
       username
       email
-      _id
     }
-  }
-  `
-  //const { me_data, me_loading, me_error } = useQuery(ME);
+  }`;
 
-  const [login, { data, loading, error }] = useMutation(LOGIN, {
-    onCompleted: async ({ login: { token } }) => {
-      if (token) {
-        //sessionStorage.setItem('authToken', json.accessToken);
-        console.log(token);
-        // const userDetails = await CurrentUser();
-        // localStorage.setItem('username', userDetails.username);
-        // localStorage.setItem('email', userDetails.email);
-        // localStorage.setItem('user_id', userDetails.id);
-        // setisLoggedIn(true);
-        // navigate("/main/home")
-        setisLoading(false)
+  const [login] = useMutation(LOGIN, {
+    onCompleted: async (data) => {
+      setisLoading(false);
+      sessionStorage.setItem('authToken', data.login.token);
+      const {loading, error, data: userData} = await client.query({
+        query: ME,
+      });
+      if (userData) {
+        localStorage.setItem('username', userData.me.username);
+        localStorage.setItem('email', userData.me.email);
+        localStorage.setItem('user_id', userData.me.id);
+        setisLoggedIn(true);
+        navigate("/main/home")
+      }
+      else {
+        seterrMsg("something went wrong!")
       }
     },
     onError: (error) => {
@@ -55,7 +58,7 @@ function Login() {
     setisLoading(true)
     e.preventDefault();
     //const response = await loginUser(credentials.email, credentials.password)
-    login({ variables: { email: credentials.email, password: credentials.password } });
+    await login({ variables: { email: credentials.email, password: credentials.password } });
     // const json = await response.json()
     // if (json.accessToken) {
     //   sessionStorage.setItem('authToken', json.accessToken);
