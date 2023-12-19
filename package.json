@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.8.8",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
     "@testing-library/jest-dom": "^5.17.0",
@@ -13,6 +14,7 @@
     "emoji-mart": "^5.5.2",
     "emoji-picker-react": "^4.5.16",
     "env-cmd": "^10.1.0",
+    "graphql": "^16.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
