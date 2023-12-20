@@ -4,27 +4,32 @@ import { authenticate } from '../Services/UserService'
 import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { loginState } from '../State/atoms/loginState'
+import { useQuery, gql } from '@apollo/client'
 
 
 function ProtectedRoute() {
     const nav = useNavigate();
     const [isLoggedIn, setisLoggedIn] = useRecoilState(loginState)
-
-    useEffect(() => {
-
-        const checkAuthenticate = async () => {
-            const status = await authenticate()
-            if (status === true) {
-
-                setisLoggedIn(true)
-            }
-            else{
-                nav("/join")
-            }
+    const AUTHENTICATE = gql`query Query {
+        authenticate
+      }`;
+    const { data } = useQuery(AUTHENTICATE, {
+        onCompleted : (data) => {
+            setisLoggedIn(true)
+        },
+        onError : (error) => {
+            nav("/join")
         }
-        checkAuthenticate()
+    });
 
-    }, [])
+    // useEffect(async () => {
+    //     if (data) {
+    //         setisLoggedIn(true)
+    //     }
+    //     else{
+    //         nav("/join")
+    //     }
+    // }, [])
 
     if (isLoggedIn) {
         return <Outlet />

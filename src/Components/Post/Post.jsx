@@ -6,19 +6,21 @@ import verified_sign from "../../Assets/verify.png"
 import MoreActions from '../MoreActions/MoreActions'
 import { likeTweet, dislikeTweet } from '../../Services/TweetService'
 import { Modal, Button } from 'react-bootstrap';
+import { useMutation, gql } from '@apollo/client'
+import client from '../../apolloClient'
 
 
 function Post(props) {
 
     const data = props.data;
     const [isPopupOpen, setPopupOpen] = useState(false);
-    const isLikedTemp = data.liked_by.includes(localStorage.getItem('user_id'));
+    const isLikedTemp = data.liked_by.some(item => item._id === localStorage.getItem('user_id'));
     const [likeCount, setlikeCount] = useState(0);
     const [isLiked, setisLiked] = useState(isLikedTemp)
     const [user, setUser] = useState({
-        "name": data.name,
-        "username": data.username,
-        "isVerified": data.isVerified
+        "name": data.user.name,
+        "username": data.user.username,
+        "isVerified": data.user.isVerified
     });
     const [replyText, setReplyText] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -29,27 +31,66 @@ function Post(props) {
         setPopupOpen(!isPopupOpen);
     };
 
+    const LIKE_TWEET = gql`mutation Mutation($tweetId: ID!) {
+        likeTweet(tweet_id: $tweetId) {
+          _id
+        }
+      }`;
+
+    const DISLIKE_TWEET = gql`mutation DisLikeTweet($tweetId: ID!) {
+        disLikeTweet(tweet_id: $tweetId) {
+          _id
+        }
+      }`;
+
     const like_Tweet = async (id) => {
-        const response = await likeTweet(id);
-        if (response.ok) {
+        const response = await client.mutate({
+            mutation: LIKE_TWEET,
+            variables: {
+                tweetId: id
+            }
+        });
+        console.log(response);
+        if(response.data){
             setlikeCount(likeCount + 1);
             setisLiked(true);
-            console.log(response);
         }
     }
 
     const disLike_Tweet = async (id) => {
-        const response = await dislikeTweet(id);
-        if (response.ok) {
+        const response = await client.mutate({
+            mutation: DISLIKE_TWEET,
+            variables: {
+                tweetId: id
+            }
+        });
+        console.log(response);
+        if(response.data){
             setlikeCount(likeCount - 1);
             setisLiked(false);
-            console.log(response);
         }
-
     }
 
-    const handleComment = () => {
-        console.log("Comment");
+    const CREATE_COMMENT = gql`mutation Mutation($tweetId: ID!, $comment: String!) {
+        createComment(tweet_id: $tweetId, comment: $comment) {
+          _id
+        }
+      }`;
+
+    const handleComment = async (id) => {
+        const response = await client.mutate({
+            mutation: CREATE_COMMENT,
+            variables: {
+                tweetId: id,
+                comment: replyText
+            }
+        });
+        console.log(response);
+        if(response.data.createComment._id){
+            setReplyText('');
+            handleClose();
+            window.location.reload();
+        }
     }
 
     useEffect(() => {
@@ -102,7 +143,7 @@ function Post(props) {
                         <div className="like action-icon" onClick={() => like_Tweet(data._id)}  > <i className="bi bi-heart" ></i> {likeCount}</div>
                     }
 
-                    <div className="comment action-icon" onClick={handleShow} ><i className="bi bi-chat"></i></div>
+                    <div className="comment action-icon" onClick={handleShow} ><i className="bi bi-chat"></i> {data.comments.length} </div>
                     <div className="share action-icon"><i className="bi bi-share"></i></div>
 
                 </div>
@@ -156,7 +197,7 @@ function Post(props) {
                     />
                 </Modal.Body>
                 <Modal.Footer className="border-0" >
-                    <Button variant="primary" className="ml-auto rounded-pill" style={{ width: '100px', fontSize: '20px' }} onClick={handleComment}>
+                    <Button variant="primary" className="ml-auto rounded-pill" style={{ width: '100px', fontSize: '20px' }} onClick={() => handleComment(data._id)}>
                         Post
                     </Button>
                 </Modal.Footer>

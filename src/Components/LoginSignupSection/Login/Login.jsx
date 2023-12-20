@@ -42,7 +42,7 @@ function Login() {
         console.log(userData);
         localStorage.setItem('username', userData.me.username);
         localStorage.setItem('email', userData.me.email);
-        localStorage.setItem('user_id', userData.me.id);
+        localStorage.setItem('user_id', userData.me._id);
         setisLoggedIn(true);
         navigate("/main/home")
       }

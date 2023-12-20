@@ -5,7 +5,7 @@ import Home from './Home/Home'
 function TimelineSection() {
   return (
     <div className='TimelineSection'>
-      <Home/>
+      <Home />
     </div>
     
   )
