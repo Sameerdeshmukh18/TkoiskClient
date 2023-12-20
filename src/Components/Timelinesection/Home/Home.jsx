@@ -4,10 +4,30 @@ import CreatePost from "../../CreatePost/CreatePost";
 import Post from "../../Post/Post";
 import PostSkeleton from "../../Post/PostSkeleton";
 import { homeTimeline } from "../../../Services/TweetService";
+import { gql, useQuery } from "@apollo/client";
+import client from "../../../apolloClient";
 
 function Home() {
 
+  const HOMETIMELINE = gql`query Query {
+    homeTimeline {
+      _id
+      user {
+        name
+        username
+        isVertified
+      }
+      tweet_text
+      liked_by {
+        _id
+      }
+      comments {
+        _id
+      }
+    }
+  }`
   const [postList, setPostList] = useState([]);
+  //const { loading_h, error_h, data } = useQuery(HOMETIMELINE)
 
   const addActiveClass = (e) => {
     let elements = document.getElementsByClassName('tab');
@@ -15,14 +35,18 @@ function Home() {
       elements[i].classList.remove('active');
     }
     e.target.classList.add("active");
-
   }
 
   const getHomeTimeline = async () => {
-    const response = await homeTimeline();
-    let data = await response.json();
-
-    setPostList(data);
+    const { loading_h, error_h, data } = await client.query({
+      query: HOMETIMELINE
+    })
+    if (error_h) {
+      console.log(error_h);
+    }
+    console.log(data);
+    // setPostList(data);
+    // console.log(postList);
   }
 
   useEffect(() => {

@@ -23,11 +23,11 @@ function Login() {
   }`;
 
   const ME = gql`
-  query Me {
+  query Query {
     me {
-      id
       username
       email
+      _id
     }
   }`;
 
@@ -35,10 +35,11 @@ function Login() {
     onCompleted: async (data) => {
       setisLoading(false);
       sessionStorage.setItem('authToken', data.login.token);
-      const {loading, error, data: userData} = await client.query({
+      const { loading, error, data: userData } = await client.query({
         query: ME,
       });
       if (userData) {
+        console.log(userData);
         localStorage.setItem('username', userData.me.username);
         localStorage.setItem('email', userData.me.email);
         localStorage.setItem('user_id', userData.me.id);

@@ -21,9 +21,6 @@ function Main(props) {
     }
   }
 
-  useEffect(() => {
-  }, [])
-
   return (
     <>
       <Sidebar />

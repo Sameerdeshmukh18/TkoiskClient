@@ -5,7 +5,7 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { RecoilRoot } from "recoil";
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloProvider } from "@apollo/client";
 import client from "./apolloClient";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
