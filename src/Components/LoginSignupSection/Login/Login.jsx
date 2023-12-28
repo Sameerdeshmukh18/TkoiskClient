@@ -58,28 +58,9 @@ function Login() {
   const handleSubmit = async (e) => {
     setisLoading(true)
     e.preventDefault();
-    //const response = await loginUser(credentials.email, credentials.password)
     await login({ variables: { email: credentials.email, password: credentials.password } });
-    // const json = await response.json()
-    // if (json.accessToken) {
-    //   sessionStorage.setItem('authToken', json.accessToken);
-    //   const userDetails = await CurrentUser();
-    //   localStorage.setItem('username', userDetails.username);
-    //   localStorage.setItem('email', userDetails.email);
-    //   localStorage.setItem('user_id', userDetails.id);
-    //   setisLoggedIn(true);
-    //   navigate("/main/home")
-    //   setisLoading(false)
-    // }
-    // else if (json.message) {
-    //   seterrMsg(json.message)
-    //   setisLoading(false)
-    // }
-    // else {
-    //   seterrMsg("something went wrong!")
-    // }
-
   }
+  
   const onChange = (e) => {
     seterrMsg(null)
     setisLoading(false)

@@ -48,7 +48,6 @@
     width: 100%; /* Reduce the width as needed */
     padding: 0; /* Remove padding to reduce size */
     margin-top: 20px;
-
   }
   
   .dob-container label {
@@ -60,21 +59,21 @@
     transition: 0.2s ease-out;
   }
   
-  .dob-container input[type="date"] {
+  .dob-container {
     width: 100%;
     margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    /* border: 1px solid #ccc;
+    border-radius: 4px; */
     appearance: none;
   }
   
-  .dob-container input[type="date"]::-webkit-inner-spin-button,
-  .dob-container input[type="date"]::-webkit-calendar-picker-indicator {
+  .dob-container::-webkit-inner-spin-button,
+  .dob-container::-webkit-calendar-picker-indicator {
     display: none;
   }
   
-  .dob-container input[type="date"]:focus + label,
-  .dob-container input[type="date"]:valid + label {
+  .dob-container:focus + label,
+  .dob-container:valid + label {
     top: -25px;
     left: 10px;
     font-size: 12px;

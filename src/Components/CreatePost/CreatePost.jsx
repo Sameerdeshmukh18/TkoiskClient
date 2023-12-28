@@ -90,8 +90,6 @@ function CreatePost() {
       setpostContent({ postText: "" })
       setisLoading(false);
 
-
-
     }
     // console.log(postContent.postText)
     // const response = await postTweet(postContent.postText);
