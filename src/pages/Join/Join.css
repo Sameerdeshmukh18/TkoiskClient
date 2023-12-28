@@ -1,0 +1,43 @@
+.joincontainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    
+}
+.logo-section{
+    width: 50%;
+    height: 100%;
+    background-color: white;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.big-logo{
+    width: 60%;
+    height: 30%;
+    border-radius: 15px;
+}
+.options-box{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: antiquewhite;
+}
+.create-account-btn{
+    width: 300px;
+    border-radius: 25px;
+    
+}
+.create-account-btn Link{
+    text-decoration: none;
+}
+.options-box p{
+    display: contents;
+    font-size:x-small;
+}
+.create-account-btn:hover{
+    background-color: #1e84de;
+}

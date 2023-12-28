@@ -1,0 +1,21 @@
+.popup {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    margin-right: 10px;
+    border-radius: 10px;
+    height: max-content; /* Ensure the popup is above other elements */
+}
+
+.popup p {
+    margin: 0;
+    padding: 5px 0;
+    /* Additional styles for the popup content */
+}
