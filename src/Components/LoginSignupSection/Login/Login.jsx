@@ -34,7 +34,7 @@ function Login() {
   const [login] = useMutation(LOGIN, {
     onCompleted: async (data) => {
       setisLoading(false);
-      sessionStorage.setItem('authToken', data.login.token);
+      localStorage.setItem('authToken', data.login.token);
       const { loading, error, data: userData } = await client.query({
         query: ME,
       });
@@ -73,7 +73,6 @@ function Login() {
           <img src={symbol} alt="" />
         </div>
         <h1>Login</h1>
-
         <form onSubmit={handleSubmit}>
           {errMsg !== null ?
             <div class="alert alert-danger d-flex align-items-center" role="alert">

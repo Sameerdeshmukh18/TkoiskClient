@@ -64,7 +64,7 @@ function Signup() {
       console.log(data);
       const json = data.register;
       if (json.token) {
-        sessionStorage.setItem("authToken", json.token);
+        localStorage.setItem("authToken", json.token);
         const { loading, error, data: userData } = await client.query({
           query: ME,
         });

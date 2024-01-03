@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { authenticate } from '../Services/UserService'
-import { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { loginState } from '../State/atoms/loginState'
 import { useQuery, gql } from '@apollo/client'
-import Join from "../pages/Join/Join"
+
 
 
 function ProtectedRoute() {
@@ -21,12 +19,14 @@ function ProtectedRoute() {
 
             }
             else{
+                console.log("authentication failed")
                 nav("/join")
 
             }
             
         },
         onError : (error) => {
+            console.log("authentication failed")
             nav("/join")
         }
     });

@@ -8,12 +8,12 @@ function ProfileMoreActions() {
 
     const handleLogout = () => {
         logout();
-        navigate("/join");
+        
     }
 
     const logout = () => {
         localStorage.clear();
-        sessionStorage.clear();
+        window.location.reload(false);
     }
 
     return (
