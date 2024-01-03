@@ -8,7 +8,6 @@ function ProfileMoreActions() {
 
     const handleLogout = () => {
         logout();
-        
     }
 
     const logout = () => {
