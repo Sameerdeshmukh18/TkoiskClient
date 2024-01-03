@@ -12,8 +12,6 @@ function ProtectedRoute() {
     const AUTHENTICATE = gql`query Query {
         authenticate
       }`;
-
-    
     const { data } = useQuery(AUTHENTICATE, {
         onCompleted : (data) => {
             if(data.authenticate){
@@ -21,7 +19,7 @@ function ProtectedRoute() {
 
             }
             else{
-                console.log("authentication failed in else")
+                console.log("authentication failed")
                 nav("/join")
 
             }
