@@ -45,6 +45,7 @@ function Login() {
         localStorage.setItem('user_id', userData.me._id);
         setisLoggedIn(true);
         navigate("/main/home")
+        window.location.reload();
       }
       else {
         seterrMsg("something went wrong!")
