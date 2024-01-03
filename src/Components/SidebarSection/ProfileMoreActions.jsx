@@ -1,19 +1,19 @@
 import React from 'react'
 import "./ProfileMoreActions.css"
 import { useNavigate } from 'react-router-dom';
+import { loginState } from '../../State/atoms/loginState'
+import { useRecoilState } from 'recoil'
 
 function ProfileMoreActions() {
 
     const navigate = useNavigate();
+    const [isLoggedIn, setisLoggedIn] = useRecoilState(loginState)
 
     const handleLogout = () => {
-        logout();
-        
-    }
-
-    const logout = () => {
         localStorage.clear();
+        setisLoggedIn(false);
         window.location.reload(false);
+        
     }
 
     return (
