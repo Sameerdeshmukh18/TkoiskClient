@@ -24,16 +24,15 @@ function ProtectedRoute(props) {
       } else {
         setisLoggedIn(false);
         console.log("protected useeffect");
+        console.log(data);
         nav("/join");
       }
+    }else{
+        nav("/join");
     }
-  }, data);
+  }, [data, loading, error, nav]);
 
-  if (loading) {
-    return <div>Loading ......</div>;
-  } else {
-    return <Component page={Page} />;
-  }
+  return (<Component page={Page} />);
 }
 
 export default ProtectedRoute;
