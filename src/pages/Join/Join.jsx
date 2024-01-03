@@ -1,9 +1,27 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import "./Join.css"
 import logo from "../.././Assets/Zoomed_Logo.png"
-import {Link} from 'react-router-dom' 
+import {Link, useNavigate} from 'react-router-dom' 
+import { useQuery, gql } from '@apollo/client'
+import client from '../../apolloClient'
 
 function Join() {
+
+  const AUTHENTICATE = gql`query Query {
+    authenticate
+  }`;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    client.query({
+      query: AUTHENTICATE
+    }).then(res => {
+      if (res.data.authenticate) {
+        navigate("/main/home")
+      }
+    })
+  })
+
   return (
     <div className='joincontainer'>
         <div className="logo-section">
