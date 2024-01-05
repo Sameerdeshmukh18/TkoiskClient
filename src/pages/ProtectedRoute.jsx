@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { Outlet, useNavigate, Navigate } from "react-router-dom";
+import { Outlet, useNavigate, Navigate, Route } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginState } from "../State/atoms/loginState";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, gql, useLazyQuery } from "@apollo/client";
 import client from "../apolloClient";
 
 function ProtectedRoute(props) {
@@ -15,24 +15,32 @@ function ProtectedRoute(props) {
     }
   `;
 
-  const { loading, error, data } = useQuery(AUTHENTICATE);
+  const [checkAuth, { loading, error, data }]  = useLazyQuery(AUTHENTICATE);
 
   useEffect(() => {
-    if (data) {
-      if (data.authenticate) {
-        setisLoggedIn(true);
-      } else {
-        setisLoggedIn(false);
-        console.log("protected useeffect");
-        console.log(data);
-        nav("/join");
-      }
-    }else{
-        nav("/join");
-    }
-  }, [data, loading, error, nav]);
+    checkAuth();
+  }, [checkAuth]);
 
-  return (<Component page={Page} />);
+  useEffect(() => {
+    if(data){
+      if(data.authenticate){
+        setisLoggedIn(true);
+        nav("/main/" + Page);
+      }
+    }
+  }, [data, loading, error])
+
+  if (loading) {
+    return <div>Loading .......</div>;
+  }
+  if (error) {
+    return <div>Error Occured</div>;
+  }
+  if (isLoggedIn) {
+    return <Component Page={Page} />;
+  } else {
+    return <Navigate to="/join" />
+  }
 }
 
 export default ProtectedRoute;
