@@ -25,7 +25,6 @@ function ProtectedRoute(props) {
     if(data){
       if(data.authenticate){
         setisLoggedIn(true);
-        nav("/main/" + Page);
       }
     }
   }, [data, loading, error])
@@ -36,10 +35,10 @@ function ProtectedRoute(props) {
   if (error) {
     return <div>Error Occured</div>;
   }
-  if (isLoggedIn) {
-    return <Component Page={Page} />;
-  } else {
-    return <Navigate to="/join" />
+  if(isLoggedIn){
+    return <Component page={Page} />
+  }else{
+    return <Navigate to={"/join"} />
   }
 }
 
