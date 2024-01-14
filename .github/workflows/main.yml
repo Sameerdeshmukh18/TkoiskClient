@@ -52,7 +52,7 @@ jobs:
         # note: use IAM role with limited role for below access-key-id and secret-access-key
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Access Key ID
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Access Secret Key
-        SOURCE_DIR: "dist/" # build folder now
+        SOURCE_DIR: "build/" # build folder now
 
     # - name: Build for Production environment
     #   run: |
