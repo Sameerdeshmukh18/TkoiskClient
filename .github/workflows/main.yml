@@ -38,16 +38,16 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
 
-    - name: Build for Production environment
-      run: |
-        REACT_APP_ENV=production npm run build
-      env:
-        REACT_APP_ENV: production
+    # - name: Build for Production environment
+    #   run: |
+    #     REACT_APP_ENV=production npm run build
+    #   env:
+    #     REACT_APP_ENV: production
 
-    - name: Deploy to Production S3 bucket
-      run: |
-        aws s3 sync build/ s3://${{ secrets.PRODUCTION_S3_BUCKET }}
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+    # - name: Deploy to Production S3 bucket
+    #   run: |
+    #     aws s3 sync build/ s3://${{ secrets.PRODUCTION_S3_BUCKET }}
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
