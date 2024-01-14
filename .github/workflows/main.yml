@@ -25,10 +25,7 @@ jobs:
         npm install 
 
     - name: Build for QA environment
-      run: |
-        REACT_APP_ENV=qa npm run build
-      env:
-        REACT_APP_ENV: qa
+      run: npm run build
 
     # - name: Deploy to QA S3 bucket
     #   run: |
