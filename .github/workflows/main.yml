@@ -30,13 +30,29 @@ jobs:
       env:
         REACT_APP_ENV: qa
 
-    - name: Deploy to QA S3 bucket
-      run: |
-        aws s3 sync build/ s3://${{ secrets.QA_S3_BUCKET }}
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+    # - name: Deploy to QA S3 bucket
+    #   run: |
+    #     aws s3 sync build/ s3://${{ secrets.QA_S3_BUCKET }}
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
+      # Deploy to S3
+      # This is a third party action used to sync our production build app with the AWS S3 bucket
+      # For security purpose I am using secrets configured in project repo setting.
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          # --acl public read => makes files publicly readable(i.e. makes sure that your bucket settings are also set to public)
+          # --delete => permanently deletes files in S3 bucket that are not present in latest build
+          args: --acl public-read --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.QA_S3_BUCKET }} # S3 bucket name
+          # note: use IAM role with limited role for below access-key-id and secret-access-key
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Access Key ID
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Access Secret Key
+          SOURCE_DIR: "dist/" # build folder now
 
     # - name: Build for Production environment
     #   run: |
