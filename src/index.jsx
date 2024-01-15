@@ -11,10 +11,10 @@ import client from "./apolloClient";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ApolloProvider client={client}>
-    {/* <React.StrictMode> */}
+     <React.StrictMode>
       <RecoilRoot>
         <App />
       </RecoilRoot>
-    {/* </React.StrictMode> */}
+    </React.StrictMode>
   </ApolloProvider>
 );
