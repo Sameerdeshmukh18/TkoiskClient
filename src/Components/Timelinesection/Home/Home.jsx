@@ -41,19 +41,6 @@ function Home() {
   const [cursor, setCursor] = useState(null);
   let ITEMS_PER_PAGE = 10;
 
-  const updateHomeTimeline = () =>{
-    if (data) {
-      console.log(data)
-      setPostList(prevData => [...prevData, ...data.homeTimeline.tweets]);
-      setCursor(data.homeTimeline.endCursor);
-      console.log(postList)
-    }
-    if (error) {
-      console.log(error);
-    }
-
-  }
-
   const { loading, error, data, fetchMore } = useQuery(
     HOMETIMELINE, {
     variables: {
@@ -87,9 +74,18 @@ function Home() {
   const hasMoreDataToLoad = !!cursor && data?.homeTimeline?.endCursor
 
   useEffect(() => {
-      
 
-  },[]);
+    if (data) {
+      console.log(data)
+      setPostList(prevData => [...prevData, ...data.homeTimeline.tweets]);
+      setCursor(data.homeTimeline.endCursor);
+      console.log(postList)
+    }
+    if (error) {
+      console.log(error);
+    }
+
+  },[data,error]);
 
   return (
 
