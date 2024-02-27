@@ -76,13 +76,7 @@ function Home() {
         postList.map((post) => {
           return <Post data={post} key={post._id} />;
         })
-      ) : (
-        <>
-          <PostSkeleton />
-          <PostSkeleton />
-          <PostSkeleton />
-        </>
-      )}
+      ) : <h5>No posts were found!</h5>}
     </div>
   );
 }
