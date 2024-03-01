@@ -60,32 +60,28 @@ function Home() {
 
   const fetchMoreData = () => {
     console.log("inside fetch more data")
-    if (!loading && cursor) {
+    setTimeout(() => {
       fetchMore({
         variables: {
           first: ITEMS_PER_PAGE,
           after: cursor
-        },
-        skip: cursor === null,
-      });
-      
-    }
+        }
+      }).then((res) => {
+        if(res) {
+        }
+        setPostList(postList.concat(res.data.homeTimeline.tweets));
+        setCursor(res.data.homeTimeline.endCursor);
+        console.log(`Cursor: ${cursor}`)
+      }).catch((err) => {
+        console.log('ERROR -x-x-x-x-x-x-x-x')
+        console.log(err)
+      })
+    }, 1500)
   }
-  const hasMoreDataToLoad = !!cursor && data?.homeTimeline?.endCursor
-
+  const hasMoreDataToLoad = cursor == "END" ? false : true
   useEffect(() => {
-
-    if (data) {
-      console.log(data)
-      setPostList(prevData => [...prevData, ...data.homeTimeline.tweets]);
-      setCursor(data.homeTimeline.endCursor);
-      console.log(postList)
-    }
-    if (error) {
-      console.log(error);
-    }
-
-  },[data,error]);
+    fetchMoreData()
+  }, []);
 
   return (
 
@@ -109,7 +105,13 @@ function Home() {
         dataLength={postList.length}
         next={fetchMoreData}
         hasMore={hasMoreDataToLoad}
-        loader={<p>Loading...</p>}
+        loader={
+          <>
+            <PostSkeleton />
+            <PostSkeleton />
+            <PostSkeleton />
+          </>
+        }
         scrollableTarget="home"
         endMessage={
           <p style={{ textAlign: 'center' }}>
