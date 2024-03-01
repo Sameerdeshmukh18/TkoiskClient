@@ -1,0 +1,53 @@
+name: Deploy to AWS S3
+
+on:
+  push:
+    branches:
+      - devtest
+      - main
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest # Specifies the operating system environment on which the workflow should run
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2 # Check out the source code or repository content to the runner machine, making it available for the subsequent steps in the workflow.
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3 # setup node environment on the runner machine
+      with: # used to pass input parameters
+        node-version: 18 # version of node to setup on runner machine
+
+    - name: Install dependencies
+      run: |
+        npm install 
+
+    - name: Build for QA environment
+      run: |
+        REACT_APP_ENV=qa npm run build
+      env:
+        REACT_APP_ENV: qa
+
+    - name: Deploy to QA S3 bucket
+      run: |
+        aws s3 sync build/ s3://${{ secrets.QA_S3_BUCKET }}
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
+    # - name: Build for Production environment
+    #   run: |
+    #     REACT_APP_ENV=production npm run build
+    #   env:
+    #     REACT_APP_ENV: production
+
+    # - name: Deploy to Production S3 bucket
+    #   run: |
+    #     aws s3 sync build/ s3://${{ secrets.PRODUCTION_S3_BUCKET }}
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    #     AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
