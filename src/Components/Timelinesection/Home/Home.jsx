@@ -4,28 +4,33 @@ import CreatePost from "../../CreatePost/CreatePost";
 import Post from "../../Post/Post";
 import PostSkeleton from "../../Post/PostSkeleton";
 import { homeTimeline } from "../../../Services/TweetService";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useLazyQuery } from "@apollo/client";
 import client from "../../../apolloClient";
 import { useRecoilState } from "recoil";
-import {PostList} from '../../../State/atoms/PostListState'
+import { PostList } from '../../../State/atoms/PostListState'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 function Home() {
 
   const HOMETIMELINE = gql`
-    query Query {
-      homeTimeline {
-        _id
-        user {
-          name
-          username
-          isVertified
-        }
-        tweet_text
-        liked_by {
+    query Query($first: Int, $after: ID) {
+      homeTimeline(first: $first, after: $after) {
+        endCursor
+        tweets {
           _id
-        }
-        comments {
-          _id
+            user {
+              name
+              username
+              isVertified
+            }
+            tweet_text
+            liked_by {
+              _id
+            }
+            comments {
+              _id
+            }
+          createdAt
         }
       }
     }
@@ -33,7 +38,17 @@ function Home() {
 
 
   const [postList, setPostList] = useRecoilState(PostList);
-  //const { loading_h, error_h, data } = useQuery(HOMETIMELINE)
+  const [cursor, setCursor] = useState(null);
+  let ITEMS_PER_PAGE = 10;
+
+  const { loading, error, data, fetchMore } = useQuery(
+    HOMETIMELINE, {
+    variables: {
+      first: ITEMS_PER_PAGE,
+      after: cursor
+    },
+
+  });
 
   const addActiveClass = (e) => {
     let elements = document.getElementsByClassName("tab");
@@ -43,22 +58,34 @@ function Home() {
     e.target.classList.add("active");
   };
 
-  const getHomeTimeline = async () => {
-    const { loading_h, error_h, data } = await client.query({
-      query: HOMETIMELINE,
-    });
-    if (error_h) {
-      console.log(error_h);
-    }
-    setPostList(data.homeTimeline);
-  };
-
+  const fetchMoreData = () => {
+    console.log("inside fetch more data")
+    setTimeout(() => {
+      fetchMore({
+        variables: {
+          first: ITEMS_PER_PAGE,
+          after: cursor
+        }
+      }).then((res) => {
+        if(res) {
+        }
+        setPostList(postList.concat(res.data.homeTimeline.tweets));
+        setCursor(res.data.homeTimeline.endCursor);
+        console.log(`Cursor: ${cursor}`)
+      }).catch((err) => {
+        console.log('ERROR -x-x-x-x-x-x-x-x')
+        console.log(err)
+      })
+    }, 1500)
+  }
+  const hasMoreDataToLoad = cursor == "END" ? false : true
   useEffect(() => {
-    getHomeTimeline();
+    fetchMoreData()
   }, []);
 
   return (
-    <div className="home">
+
+    <div className="home" id="home">
       <div className="navbara">
         <div
           id="for-you"
@@ -71,13 +98,44 @@ function Home() {
           Following
         </div>
       </div>
+
       <CreatePost />
-      {postList.length > 0 ? (
-        postList.map((post) => {
-          return <Post data={post} key={post._id} />;
-        })
-      ) : <h5>No posts were found!</h5>}
+
+      <InfiniteScroll
+        dataLength={postList.length}
+        next={fetchMoreData}
+        hasMore={hasMoreDataToLoad}
+        loader={
+          <>
+            <PostSkeleton />
+            <PostSkeleton />
+            <PostSkeleton />
+          </>
+        }
+        scrollableTarget="home"
+        endMessage={
+          <p style={{ textAlign: 'center' }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+      >
+
+        {postList.length > 0 ? (
+          postList.map((post) => {
+            return <Post data={post} key={post._id} />;
+          })
+        )
+
+          : (
+            <>
+              <PostSkeleton />
+              <PostSkeleton />
+              <PostSkeleton />
+            </>
+          )}
+      </InfiniteScroll>
     </div>
+
   );
 }
 

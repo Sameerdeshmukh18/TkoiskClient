@@ -56,6 +56,7 @@ function CreatePost() {
         comments {
           _id
         }
+        createdAt
       }
     }
   `

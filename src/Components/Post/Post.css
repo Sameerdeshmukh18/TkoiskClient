@@ -65,6 +65,15 @@
   margin-left: 10px;
   color: rgb(105, 104, 104);
 }
+.time-ago{
+  margin-left: 10px;
+  color: rgb(105, 104, 104);
+
+}
+.dot{
+  margin-left: 10px;
+  
+}
 .more-icon {
   margin-right: 20px;
   border-radius: 10px;

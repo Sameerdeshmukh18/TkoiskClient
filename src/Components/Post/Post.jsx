@@ -8,6 +8,7 @@ import { likeTweet, dislikeTweet } from "../../Services/TweetService";
 import { Modal, Button, Dropdown } from "react-bootstrap";
 import { useMutation, gql } from "@apollo/client";
 import client from "../../apolloClient";
+import TimeAgo from 'timeago-react';
 
 function Post(props) {
   const data = props.data;
@@ -121,17 +122,23 @@ function Post(props) {
               </div>
             ) : null}
             <div className="creator-username">@{user.username}</div>
+            <div className="dot">.</div>
+            <div className="time-ago">
+              <TimeAgo
+                datetime={data.createdAt}
+              />
+            </div>
           </div>
 
           <div className="more-icon" >
-            
+
             <Dropdown onSelect={handleSelect}>
-              <Dropdown.Toggle style={{backgroundColor: "transparent", border: "none", color: "black"}} >
-              <i className="bi bi-three-dots"></i>
+              <Dropdown.Toggle style={{ backgroundColor: "transparent", border: "none", color: "black" }} >
+                <i className="bi bi-three-dots"></i>
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item eventKey="1"><i className="bi bi-flag"/>  Report user</Dropdown.Item>
-                <Dropdown.Item eventKey="2"><i className="bi bi-person-add"/>  Follow user</Dropdown.Item>
+                <Dropdown.Item eventKey="1"><i className="bi bi-flag" />  Report user</Dropdown.Item>
+                <Dropdown.Item eventKey="2"><i className="bi bi-person-add" />  Follow user</Dropdown.Item>
                 <Dropdown.Item eventKey="3"><i className="bi bi-bookmark" />  Bookmark</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
@@ -204,7 +211,6 @@ function Post(props) {
                 <div className="more-icon" onClick={togglePopup}>
                   <i className="bi bi-three-dots"></i>
                 </div>
-
                 {isPopupOpen && <MoreActions />}
               </div>
               <div className="main-content">
