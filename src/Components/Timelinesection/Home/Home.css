@@ -6,9 +6,9 @@
 
 .navbara {
     height: 60px;
-    width: 45%;
+    width: 100%;
     background-color: (255, 255, 255, 0.3);
-    position: fixed;
+    position: sticky;
     z-index: 99;
     display: flex;
     justify-content: space-around;
@@ -16,6 +16,7 @@
     backdrop-filter: blur(10px);
     border: solid black 2px;
     margin: 0;
+    top: 0;
     align-items: center;
 
 }

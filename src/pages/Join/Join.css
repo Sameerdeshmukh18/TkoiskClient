@@ -13,8 +13,8 @@
    align-items: center;
 }
 .big-logo{
-    width: 60%;
-    height: 30%;
+    width: 400px;
+    height: 220px;
     border-radius: 15px;
 }
 .options-box{
@@ -41,3 +41,24 @@
 .create-account-btn:hover{
     background-color: #1e84de;
 }
+
+@media only screen and (max-width: 900px) {
+    /* For mobile phones: */
+    .joincontainer{
+      flex-direction: column;
+    }
+    .logo-section{
+        width: 100%;
+    }
+    .options-box{
+        width: 100%;
+        padding: 10px;
+        
+    }
+    .big-logo{
+        width: 300px;
+        height: 140px;
+        border-radius: 15px;
+    }
+    
+  }
