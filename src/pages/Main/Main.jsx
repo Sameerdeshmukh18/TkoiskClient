@@ -3,6 +3,7 @@ import Sidebar from '../../Components/SidebarSection/Sidebar'
 import TimelineSection from '../../Components/Timelinesection/TimelineSection'
 import ExploreSection from '../../Components/ExploreSection/ExploreSection'
 import SearchSection from '../../Components/SearchSection/SearchSection'
+import './Main.css'
 
 
 

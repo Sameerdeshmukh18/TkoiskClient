@@ -30,37 +30,37 @@ function Sidebar() {
           <li>
             <div onClick={handleHome}>
               <i className="bi bi-house-door-fill"></i>
-              Home
+              <span>Home</span>
             </div>
           </li>
           <li>
             <div onClick={handleExplore} >
               <i className="bi bi-search"></i>
-              Explore
+              <span></span>
             </div>
           </li>
           <li>
             <div>
               <i className="bi bi-bell"></i>
-              Notifications
+              <span>Notifications</span>
             </div>
           </li>
           <li>
             <div>
               <i className="bi bi-envelope"></i>
-              Messages
+              <span>Messages</span>
             </div>
           </li>
           <li>
             <div>
               <i className="bi bi-person"></i>
-              Profile
+              <span>Profile</span>
             </div>
           </li>
           <li>
             <div>
               <i className="bi bi-three-dots"></i>
-              More
+              <span>More</span>
             </div>
           </li>
         </ul>

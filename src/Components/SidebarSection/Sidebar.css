@@ -28,7 +28,6 @@
 }
 
 ul {
-
     list-style-type: none;
     padding-inline-start: 10px;
 }
@@ -43,8 +42,6 @@ li {
     margin: 20px;
     font-size: larger;
     padding: 0 20px;
-
-
 }
 
 li :hover {
@@ -96,8 +93,6 @@ li div i {
 
 .profilepopup.top-popup {
     position: absolute;
-    /* top: calc(73% + 10px); */
-    /* Adjust the spacing as needed */
     bottom: 15%;
     right: 0;
     background-color: white;
@@ -117,4 +112,63 @@ li div i {
     margin: 0;
     padding: 5px 0;
     /* Additional styles for the popup content */
+}
+
+@media screen and (max-width: 768px) {
+
+    .sidebar{
+        width: 100%;
+        height: 50px;
+        position: fixed;
+        bottom: 0;
+        z-index: 100;
+        flex-direction: row;
+        background-color: transparent;
+    }
+    .profile-bar {
+        display: none;
+    }
+    .logo{
+        display: none;
+    }
+    .profile-info {
+        display: none;
+    }
+    ul{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        box-sizing: border-box;
+        background-color: rgb(72, 76, 175, 0.9);
+        padding-left: 0;
+        margin: 0;
+        
+    }
+    ul li div{
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+    }
+    
+    ul li{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 60px;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+    }
+    li :hover {
+        border-radius: 0;
+    }
+    ul li span{
+        display: none;
+    }
+    
+
 }
