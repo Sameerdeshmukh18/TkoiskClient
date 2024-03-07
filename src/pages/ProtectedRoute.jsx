@@ -28,13 +28,13 @@ function ProtectedRoute(props) {
         setisLoggedIn(data.authenticate);
         setTimeout(()=>{
           setLoadingPage(false);
-        },2000)
+        },1000)
         
       } catch (error) {
         console.error('Error checking authentication:', error);
         setTimeout(()=>{
           setLoadingPage(false);
-        },2000)
+        },1000)
       }
     };
 

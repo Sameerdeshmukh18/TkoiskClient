@@ -94,3 +94,17 @@
   cursor: pointer;
   filter: drop-shadow(0 0 0.75rem blue);
 }
+@media screen and (max-width: 768px) {
+    .more-icon{
+      margin-right: 5px;
+    }
+    .time-ago{
+      display: none;
+    }
+    .dot{
+      display: none;
+    }
+    .profile-pic-icon{
+      width: 12%;
+    }
+  }
