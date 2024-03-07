@@ -36,7 +36,7 @@ function Sidebar() {
           <li>
             <div onClick={handleExplore} >
               <i className="bi bi-search"></i>
-              <span></span>
+              <span>Explore</span>
             </div>
           </li>
           <li>

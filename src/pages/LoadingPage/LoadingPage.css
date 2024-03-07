@@ -1,0 +1,16 @@
+.loading-container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    
+}
+.loading-logo{
+    max-width: 50%;
+    max-height: 20%;
+}
+.loading-logo img{
+    max-width: 100%;
+}

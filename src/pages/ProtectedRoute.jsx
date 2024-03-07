@@ -4,42 +4,53 @@ import { useRecoilState } from "recoil";
 import { loginState } from "../State/atoms/loginState";
 import { useQuery, gql, useLazyQuery } from "@apollo/client";
 import client from "../apolloClient";
+import LoadingPage from "./LoadingPage/LoadingPage";
+
 
 function ProtectedRoute(props) {
   const { Component, Page } = props;
-  const nav = useNavigate();
+  const [loadingPage,setLoadingPage] = useState(true);
   const [isLoggedIn, setisLoggedIn] = useRecoilState(loginState);
-  const AUTHENTICATE = gql`
-    query Query {
-      authenticate
-    }
-  `;
-
-  const [checkAuth, { loading, error, data }]  = useLazyQuery(AUTHENTICATE);
 
   useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+    
+    const checkAuthentication = async () => {
+      try {
+        // Make a GraphQL query to check authentication status
+        const { data } = await client.query({
+          query: gql`
+          query Query {
+            authenticate
+          }
+          `
+        });
 
-  useEffect(() => {
-    if(data){
-      if(data.authenticate){
-        setisLoggedIn(true);
+        setisLoggedIn(data.authenticate);
+        setTimeout(()=>{
+          setLoadingPage(false);
+        },2000)
+        
+      } catch (error) {
+        console.error('Error checking authentication:', error);
+        setTimeout(()=>{
+          setLoadingPage(false);
+        },2000)
       }
-    }
-  }, [data, loading, error])
+    };
 
-  if (loading) {
-    return <div>Loading .......</div>;
+    checkAuthentication();
+    
+  }, [])
+
+  if (loadingPage) {
+    return <LoadingPage/>;
   }
-  if (error) {
-    return <div>Error Occured</div>;
-  }
-  if(isLoggedIn){
-    return <Component page={Page} />
-  }else{
-    return <Navigate to={"/join"} />
-  }
+
+  return (
+    
+    <>{isLoggedIn ? <Component page={Page} /> : <Navigate to={"/join"} />}</>
+
+  );
 }
 
 export default ProtectedRoute;
