@@ -114,7 +114,7 @@ function Home() {
         }
         scrollableTarget="home"
         endMessage={
-          <p style={{ textAlign: 'center' }}>
+          <p className="end-message" style={{ textAlign: 'center'}}>
             <b>Yay! You have seen it all</b>
           </p>
         }

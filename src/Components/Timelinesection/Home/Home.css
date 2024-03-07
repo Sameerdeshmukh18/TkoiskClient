@@ -39,3 +39,14 @@
     border-bottom: 5px solid #484caf;
     font-weight: bold;
 }
+
+@media screen and (max-width: 768px) {
+    .navbara {
+        top: 49px;
+    }
+    .end-message{
+        padding-bottom: 60px; 
+        padding-top: 0px;
+    }
+
+}
