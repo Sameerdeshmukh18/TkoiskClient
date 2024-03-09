@@ -3,8 +3,8 @@ import Sidebar from '../../Components/SidebarSection/Sidebar'
 import TimelineSection from '../../Components/Timelinesection/TimelineSection'
 import ExploreSection from '../../Components/ExploreSection/ExploreSection'
 import SearchSection from '../../Components/SearchSection/SearchSection'
+import ProfileSection from '../../Components/ProfileSection/ProfileSection'
 import './Main.css'
-
 
 
 function Main(props) {
@@ -17,6 +17,8 @@ function Main(props) {
         return <TimelineSection />
       case 'explore':
         return <ExploreSection />
+      case 'profile':
+        return <ProfileSection />
       default:
         return <TimelineSection />
     }

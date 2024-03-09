@@ -21,6 +21,7 @@ function App() {
           <Route path="/join/login" element={<Login />} />
           <Route path="/main/home" element={<ProtectedRoute Component={Main} Page={"home"} />} />
           <Route path="/main/explore" element={<ProtectedRoute Component={Main} Page={"explore"} />} />
+          <Route path="/main/profile" element={<ProtectedRoute Component={Main} Page={"profile"} />} />
         </Routes>
       </div>
     </Router>

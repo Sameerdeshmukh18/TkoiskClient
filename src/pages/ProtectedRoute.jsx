@@ -12,33 +12,36 @@ function ProtectedRoute(props) {
   const [loadingPage,setLoadingPage] = useState(true);
   const [isLoggedIn, setisLoggedIn] = useRecoilState(loginState);
 
-  useEffect(() => {
-    
-    const checkAuthentication = async () => {
-      try {
-        // Make a GraphQL query to check authentication status
-        const { data } = await client.query({
-          query: gql`
-          query Query {
-            authenticate
-          }
-          `
-        });
+  const checkAuthentication = async () => {
 
-        setisLoggedIn(data.authenticate);
-        setTimeout(()=>{
-          setLoadingPage(false);
-        },1000)
-        
-      } catch (error) {
-        console.error('Error checking authentication:', error);
-        setTimeout(()=>{
-          setLoadingPage(false);
-        },1000)
+    console.log('Make query to graphql to check authentication')
+    const response = await client.query({
+      query: gql`
+      query Query {
+        authenticate
       }
-    };
+      `
+    });
+    console.log(`Backend Response`)
+    console.log(response)
+    if(response.data) {
+      if(response.data.authenticate) return true
+      return false
+    }
+    return false
+  }
 
-    checkAuthentication();
+  useEffect(() => {
+    const authenticationPromise = checkAuthentication()
+    authenticationPromise.then((loginState) => {
+      console.log(`Wow: ${loginState}`)
+      setisLoggedIn(loginState)
+      setTimeout(() => {
+        setLoadingPage(false)
+      }, 1000)
+    }).catch((err) => {
+      console.log(`Error: ${err}`)
+    })
     
   }, [])
 
@@ -48,7 +51,7 @@ function ProtectedRoute(props) {
 
   return (
     
-    <>{isLoggedIn ? <Component page={Page} /> : <Navigate to={"/join"} />}</>
+    <>{isLoggedIn ? <Component page={Page} /> : <Navigate to="/join" />}</>
 
   );
 }

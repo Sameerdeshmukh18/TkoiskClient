@@ -19,6 +19,9 @@ function Sidebar() {
   const handleHome = () => {
     navigate('/main/Home');
   }
+  const handleProfile = () => {
+    navigate('/main/Profile');
+  } 
 
   return (
     <div className="sidebar">
@@ -52,7 +55,7 @@ function Sidebar() {
             </div>
           </li>
           <li>
-            <div>
+            <div onClick={handleProfile} >
               <i className="bi bi-person"></i>
               <span>Profile</span>
             </div>
