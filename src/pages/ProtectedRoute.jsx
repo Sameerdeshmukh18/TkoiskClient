@@ -5,7 +5,7 @@ import { loginState } from "../State/atoms/loginState";
 import { useQuery, gql, useLazyQuery } from "@apollo/client";
 import client from "../apolloClient";
 import LoadingPage from "./LoadingPage/LoadingPage";
-
+import ApolloAPI from "../ApiCllient";
 
 function ProtectedRoute(props) {
   const { Component, Page } = props;
@@ -13,17 +13,13 @@ function ProtectedRoute(props) {
   const [isLoggedIn, setisLoggedIn] = useRecoilState(loginState);
 
   const checkAuthentication = async () => {
-
-    console.log('Make query to graphql to check authentication')
-    const response = await client.query({
+    const response = await new ApolloAPI().client.query({
       query: gql`
       query Query {
         authenticate
       }
       `
     });
-    console.log(`Backend Response`)
-    console.log(response)
     if(response.data) {
       if(response.data.authenticate) return true
       return false
@@ -32,16 +28,16 @@ function ProtectedRoute(props) {
   }
 
   useEffect(() => {
-    const authenticationPromise = checkAuthentication()
-    authenticationPromise.then((loginState) => {
-      console.log(`Wow: ${loginState}`)
-      setisLoggedIn(loginState)
-      setTimeout(() => {
-        setLoadingPage(false)
-      }, 1000)
-    }).catch((err) => {
-      console.log(`Error: ${err}`)
-    })
+    checkAuthentication()
+      .then((loginState) => {
+        setisLoggedIn(loginState)
+        setTimeout(() => {
+          setLoadingPage(false)
+        }, 1000)
+      })
+      .catch((err) => {
+        console.log(`Error: ${err}`)
+      })
     
   }, [])
 
