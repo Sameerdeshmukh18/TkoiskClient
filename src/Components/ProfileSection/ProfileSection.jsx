@@ -20,6 +20,8 @@ function ProfileSection() {
     const handleFileChange = async (event) => {
         const file = event.target.files[0]
 
+        const userId = "jncudhilqwehfjhucahdafsdhfsfhkdj"
+        const fileName = `${userId}/ProfilePhoto`
         // Update state variable to hold selected file by user
         setSelectedFile(file)
         
@@ -28,7 +30,7 @@ function ProfileSection() {
                 {
                 mutation: QUERY_TO_GET_PRESIGNED_URL,
                 variables: {
-                    "fileName": file.name,
+                    "fileName": fileName,
                     "fileType": file.type
                 }
             }
