@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Home.css";
 import CreatePost from "../../CreatePost/CreatePost";
 import Post from "../../Post/Post";
@@ -9,8 +9,12 @@ import client from "../../../apolloClient";
 import { useRecoilState } from "recoil";
 import { PostList } from '../../../State/atoms/PostListState'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import Tweet from './Tweet/Tweet'
 
 function Home() {
+  const containerRef = useRef(null);
+  const [tweet, setTweet] = useState(null)
+  const [isScrollingDisabled, setIsScrollingDisabled] = useState(false);
 
   const HOMETIMELINE = gql`
     query Query($first: Int, $after: ID) {
@@ -59,7 +63,6 @@ function Home() {
   };
 
   const fetchMoreData = () => {
-    console.log("inside fetch more data")
     setTimeout(() => {
       fetchMore({
         variables: {
@@ -67,25 +70,45 @@ function Home() {
           after: cursor
         }
       }).then((res) => {
-        if(res) {
-        }
         setPostList(postList.concat(res.data.homeTimeline.tweets));
         setCursor(res.data.homeTimeline.endCursor);
-        console.log(`Cursor: ${cursor}`)
       }).catch((err) => {
-        console.log('ERROR -x-x-x-x-x-x-x-x')
         console.log(err)
       })
     }, 1500)
   }
   const hasMoreDataToLoad = cursor == "END" ? false : true
+
+  const openTweet = (post) => {
+    setTweet(post)
+    setIsScrollingDisabled(true)
+  }
+
+  const closeTweet = () => {
+    setTweet(null)
+    setIsScrollingDisabled(false)
+  }
+
+  const handleScroll = (e) => {
+    if (isScrollingDisabled) {
+      e.preventDefault();
+      containerRef.current.scrollTop = 0;
+    }
+  };
+
   useEffect(() => {
     fetchMoreData()
   }, []);
 
   return (
 
-    <div className="home" id="home">
+    <div
+      className={isScrollingDisabled ? 'home scroll-container-disabled' : 'home'}
+      id="home"
+      onScroll={handleScroll}
+
+      ref={containerRef} >
+
       <div className="navbara">
         <div
           id="for-you"
@@ -96,6 +119,12 @@ function Home() {
         </div>
         <div id="following" className="following tab" onClick={addActiveClass}>
           Following
+        </div>
+
+        <div className="tweet-view-container">
+          {
+            tweet ? <Tweet tweet={tweet} key={tweet._id} closeTweet={closeTweet} /> : ""
+          }
         </div>
       </div>
 
@@ -114,7 +143,7 @@ function Home() {
         }
         scrollableTarget="home"
         endMessage={
-          <p className="end-message" style={{ textAlign: 'center'}}>
+          <p className="end-message" style={{ textAlign: 'center' }}>
             <b>Yay! You have seen it all</b>
           </p>
         }
@@ -122,7 +151,7 @@ function Home() {
 
         {postList.length > 0 ? (
           postList.map((post) => {
-            return <Post data={post} key={post._id} />;
+            return <Post data={post} key={post._id} openTweet={openTweet} />;
           })
         )
 

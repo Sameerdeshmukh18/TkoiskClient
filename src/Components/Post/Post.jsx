@@ -103,12 +103,16 @@ function Post(props) {
     }
   };
 
+  const openTweet = () => {
+    props.openTweet(data)
+  }
+
   useEffect(() => {
     setlikeCount(data.liked_by.length);
   }, [data]);
 
   return (
-    <div className="post">
+    <div className="post" onClick={openTweet}>
       <div className="profile-pic-icon">
         <img src={profilepic} alt="Profile" className="profile-pic" />
       </div>

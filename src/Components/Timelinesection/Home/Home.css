@@ -40,6 +40,14 @@
     font-weight: bold;
 }
 
+.tweet-view-container {
+    position: relative;
+    height: 100vh;
+}
+.scroll-container-disabled {
+    overflow: hidden;
+}
+
 @media screen and (max-width: 768px) {
     .navbara {
         top: 49px;
