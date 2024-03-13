@@ -3,7 +3,7 @@ name: Deploy to AWS S3
 on:
   push:
     branches:
-      - devtest
+      - feature/Merged_Profile_Section_And_View_Single_Tweet_Branch
       - main
 
 jobs:
