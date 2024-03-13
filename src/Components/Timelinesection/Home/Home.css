@@ -14,7 +14,7 @@
     justify-content: space-around;
     color: rgb(0, 0, 0);
     backdrop-filter: blur(10px);
-    border: solid black 2px;
+    border: 2px solid rgb(192, 193, 195);
     margin: 0;
     top: 0;
     align-items: center;
@@ -47,7 +47,9 @@
 .scroll-container-disabled {
     overflow: hidden;
 }
-
+.end-message{
+    margin-top: 10px;
+}
 @media screen and (max-width: 768px) {
     .navbara {
         top: 49px;
