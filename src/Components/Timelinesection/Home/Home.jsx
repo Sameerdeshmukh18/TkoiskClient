@@ -79,7 +79,28 @@ function Home() {
   }
   const hasMoreDataToLoad = cursor == "END" ? false : true
 
-  const openTweet = (post) => {
+
+  /*
+  Add 'exclude-click' class to elements which should not trigger main tweet dialog 
+  All the children nodes including its parent will not trigger the tweet dialog to open if the exclude-click class is assigned to the parent
+  */
+  const openTweet = (post, event) => {
+    var currentNode = event.target // Node which triggered the event
+    var parentNode = currentNode.parentNode // Parent Node
+
+    // Traverse through nodes backward (child -> parent -> grand parent and so on...)
+    while (currentNode && parentNode) {
+      // Should not open tweet dialog as the node contains 'exclude-click' class
+      if (currentNode.classList && currentNode.classList.contains('exclude-click')) return
+
+      // Break the loop as this is the last parent node for a post
+      if (parentNode.classList && parentNode.classList.contains('main-post-container')) break
+
+      // Update current node and parent node
+      currentNode = parentNode
+      parentNode = currentNode.parentNode
+    }
+
     setTweet(post)
     setIsScrollingDisabled(true)
   }
@@ -137,8 +158,8 @@ function Home() {
         loader={
           <>
             <PostSkeleton />
-            <PostSkeleton />
-            <PostSkeleton />
+            {/* <PostSkeleton />
+            <PostSkeleton /> */}
           </>
         }
         scrollableTarget="home"
@@ -158,8 +179,8 @@ function Home() {
           : (
             <>
               <PostSkeleton />
-              <PostSkeleton />
-              <PostSkeleton />
+              {/* <PostSkeleton />
+              <PostSkeleton /> */}
             </>
           )}
       </InfiniteScroll>

@@ -1,7 +1,6 @@
 .tweet-container {
     background: white;
     text-align: left;
-    padding: 0px 20px;
     position: fixed;
     left: 0;
     top: 0;
@@ -10,6 +9,37 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
+}
+.tweet-header-control {
+    position: sticky;
+    left: 0;
+    top: 0;
+    background: white;
+    box-sizing: border-box;
+    padding: 2px 5px;
+}
+.tweet-info-container {
+    padding: 0px 20px;
+}
+.back-to-posts-icon-btn {
+    font-size: 30px;
+    font-weight: bold;
+    height: 40px;
+    padding: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.8);
+    background: none;
+}
+.back-to-posts-icon-btn > i {
+    margin-left: 20px;
+}
+.back-to-posts-icon-btn:hover {
+    transition: linear 300ms;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .tweet {
@@ -19,6 +49,7 @@
 .tweet > div:first-child {
     display: flex;
     padding: 20px 0px;
+    padding-top: 0;
     margin-bottom: 10px;
     align-items: center;
 }
@@ -35,7 +66,7 @@
     margin-right: 20px;
 }
 .user-photo .photo {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -46,7 +77,7 @@
 .comments {
     padding: 0px 30px;
     flex: 1;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     margin-bottom: 10px;
 }
 .tweet-text {
@@ -76,4 +107,18 @@
     justify-content: center;
     align-items: center;
     padding: 10px 30px;
+}
+
+.separator-line {
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    margin: 10px 0px;
+    
+}
+
+.scroll-shadow {
+    box-shadow: 0px 5px 5px -5px rgba(0, 0, 0, 0.5);
+}
+
+.tweet-footer {
+    height: 115px;
 }
