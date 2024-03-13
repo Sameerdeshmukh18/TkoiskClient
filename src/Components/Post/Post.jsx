@@ -103,8 +103,8 @@ function Post(props) {
     }
   };
 
-  const openTweet = () => {
-    props.openTweet(data)
+  const openTweet = (event) => {
+    props.openTweet(data, event)
   }
 
   useEffect(() => {
@@ -112,7 +112,7 @@ function Post(props) {
   }, [data]);
 
   return (
-    <div className="post" onClick={openTweet}>
+    <div className="main-post-container post" onClick={openTweet}>
       <div className="profile-pic-icon">
         <img src={profilepic} alt="Profile" className="profile-pic" />
       </div>
@@ -134,7 +134,7 @@ function Post(props) {
             </div>
           </div>
 
-          <div className="more-icon" >
+          <div className="more-icon exclude-click" >
 
             <Dropdown onSelect={handleSelect}>
               <Dropdown.Toggle style={{ backgroundColor: "transparent", border: "none", color: "black" }} >
@@ -156,7 +156,7 @@ function Post(props) {
         <div className="post-actions">
           {isLiked ? (
             <div
-              className="like action-icon"
+              className="like action-icon exclude-click"
               onClick={() => disLike_Tweet(data._id)}
             >
               {" "}
@@ -165,7 +165,7 @@ function Post(props) {
             </div>
           ) : (
             <div
-              className="like action-icon"
+              className="like action-icon exclude-click"
               onClick={() => like_Tweet(data._id)}
             >
               {" "}
@@ -173,15 +173,16 @@ function Post(props) {
             </div>
           )}
 
-          <div className="comment action-icon" onClick={handleShow}>
+          <div className="comment action-icon exclude-click" onClick={handleShow}>
             <i className="bi bi-chat"></i> {data.comments.length}{" "}
           </div>
-          <div className="share action-icon">
+          <div className="share action-icon exclude-click">
             <i className="bi bi-share"></i>
           </div>
         </div>
       </div>
       <Modal
+        className="exclude-click"
         show={showModal}
         onHide={handleClose}
         style={{ borderRadius: "40px" }}

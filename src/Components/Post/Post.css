@@ -1,3 +1,7 @@
+.main-post-container:hover {
+  background: rgba(0, 0, 0, 0.07);
+  transition: linear 300ms;
+}
 .post {
   background-color: white;
   height: max-content;
@@ -6,6 +10,7 @@
   display: flex;
   flex-direction: row;
   border-bottom: none;
+  cursor: pointer;
 }
 .post:last-of-type{
   border-bottom: 1px solid rgb(192, 193, 195);
