@@ -110,6 +110,8 @@ function Home() {
   /*
   Add 'exclude-click' class to elements which should not trigger main tweet dialog 
   All the children nodes including its parent will not trigger the tweet dialog to open if the exclude-click class is assigned to the parent
+
+  Open single tweet dialog
   */
   const openTweet = (post, event) => {
     if(event == null) {
@@ -140,12 +142,14 @@ function Home() {
     navigate(`${post._id}`)
   }
 
+  // Close single tweet dialog
   const closeTweet = () => {
     setTweet(null)
     setIsScrollingDisabled(false)
     navigate('')
   }
 
+  // Disable scroll on main screen where all tweets are shown, when single tweet dialog opens
   const handleScroll = (e) => {
     if (isScrollingDisabled) {
       e.preventDefault();
@@ -154,15 +158,18 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log(location.pathname)
-    const partsURL = location.pathname.split('/')
-    console.log(partsURL)
-    var tweetIdFromURL = ''
-    if (partsURL.length == 4) tweetIdFromURL = partsURL[3]
-    console.log(tweetIdFromURL)
+
+    // Fetch tweets in paginated fashion
     fetchMoreData()
 
-    // Query tweet from backend and pass it to openTweet function
+    // Current URL Path
+    const partsURL = location.pathname.split('/')
+
+    // Checks if URL has tweet ID
+    var tweetIdFromURL = ''
+    if (partsURL.length == 4) tweetIdFromURL = partsURL[3]
+
+    // Query tweet from backend and pass it to openTweet function, if URL has tweet ID
     if (tweetIdFromURL) {
       console.log(`Fetch tweet from Tweet ID provided in URL: ${tweetIdFromURL}`)
       getTweetById({
