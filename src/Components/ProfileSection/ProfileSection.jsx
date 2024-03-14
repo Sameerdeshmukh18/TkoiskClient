@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './ProfileSection.css';
 import client from '../../apolloClient';
 import { useQuery, useMutation, gql } from '@apollo/client'
-import coverImage from "../../Assets/Logo.png"
 import profilepic from "../../Assets/profilepic.jpg"
 import ApolloAPI from "../../ApiCllient";
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -13,6 +12,7 @@ function ProfileSection() {
 
     const [userId, setUserId] = useState(localStorage.getItem('user_id'))
     const imageBaseURL = 'https://tkiosk-users-data.s3.ap-south-1.amazonaws.com'
+    const [coverImageURL, setCoverImageURL] = useState(`${imageBaseURL}/${userId}/CoverPhoto`)
     const [selectedFile, setSelectedFile] = useState(null);
     const [myPostList, setMyPostList] = useState([]);
     const [cursor, setCursor] = useState();
@@ -173,14 +173,14 @@ function ProfileSection() {
                         console.log('File Uploaded Successfully :)')
 
                         // only for testing purpose
-                        let a = document.createElement('a')
-                        a.target = '_blank'
-                        a.href = `${imageBaseURL}/${fileName}`
-                        a.click()
+                        // let a = document.createElement('a')
+                        // a.target = '_blank'
+                        // a.href = `${imageBaseURL}/${fileName}`
+                        // a.click()
 
                         // Reset state variables after file upload
                         setSelectedFile(null)
-
+                        window.location.reload();
                     })
                     .catch((err) => {
                         console.log(err)
@@ -210,10 +210,10 @@ function ProfileSection() {
         <div className='ProfileSection' id='profileSection'>
             <div className="profile-details">
                 <div className="cover-picture">
-                    {/* <img src={coverImage} alt="" /> */}
+                    <img src={coverImageURL} alt="Cover Photo" />
                 </div>
                 <div className="profile-picture">
-                    <img src={profilepic} alt="" />
+                    <img src={profilepic} alt="Profile Photo" />
                 </div>
                 <div className="profile-card">
                     <div className="username-name">
