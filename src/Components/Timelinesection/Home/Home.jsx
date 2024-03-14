@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Home.css";
 import CreatePost from "../../CreatePost/CreatePost";
 import Post from "../../Post/Post";
@@ -13,6 +14,8 @@ import Tweet from './Tweet/Tweet'
 
 function Home() {
   const containerRef = useRef(null);
+  const navigate = useNavigate()
+  const location = useLocation()
   const [tweet, setTweet] = useState(null)
   const [isScrollingDisabled, setIsScrollingDisabled] = useState(false);
 
@@ -80,11 +83,39 @@ function Home() {
   const hasMoreDataToLoad = cursor == "END" ? false : true
 
 
+  // Below query returns information of a tweet
+  const TWEET_INFO_QUERY = gql`
+      query GetTweetById($tweetId: ID!) {
+          getTweetById(tweet_id: $tweetId) {
+              tweet_text
+              _id
+              liked_by {
+                  _id
+              }
+              user {
+                  username
+                  name
+                  isVertified
+                  _id
+              }
+          }
+      }
+  `
+  const [getTweetById, { tweetLoading, tweetError, tweetData }] = useLazyQuery(TWEET_INFO_QUERY, {
+    onCompleted: (result) => {
+      openTweet(result.getTweetById, null)
+    },
+  });
+
   /*
   Add 'exclude-click' class to elements which should not trigger main tweet dialog 
   All the children nodes including its parent will not trigger the tweet dialog to open if the exclude-click class is assigned to the parent
   */
   const openTweet = (post, event) => {
+    if(event == null) {
+      openTweetHelper(post)
+      return
+    }
     var currentNode = event.target // Node which triggered the event
     var parentNode = currentNode.parentNode // Parent Node
 
@@ -100,14 +131,19 @@ function Home() {
       currentNode = parentNode
       parentNode = currentNode.parentNode
     }
+    openTweetHelper(post)
+  }
 
+  const openTweetHelper = (post) => {
     setTweet(post)
     setIsScrollingDisabled(true)
+    navigate(`${post._id}`)
   }
 
   const closeTweet = () => {
     setTweet(null)
     setIsScrollingDisabled(false)
+    navigate('')
   }
 
   const handleScroll = (e) => {
@@ -118,8 +154,24 @@ function Home() {
   };
 
   useEffect(() => {
+    console.log(location.pathname)
+    const partsURL = location.pathname.split('/')
+    console.log(partsURL)
+    var tweetIdFromURL = ''
+    if (partsURL.length == 4) tweetIdFromURL = partsURL[3]
+    console.log(tweetIdFromURL)
     fetchMoreData()
-  }, []);
+
+    // Query tweet from backend and pass it to openTweet function
+    if (tweetIdFromURL) {
+      console.log(`Fetch tweet from Tweet ID provided in URL: ${tweetIdFromURL}`)
+      getTweetById({
+        variables: {
+          tweetId: tweetIdFromURL
+        }
+      })
+    }
+  }, [location.pathname]);
 
   return (
 
