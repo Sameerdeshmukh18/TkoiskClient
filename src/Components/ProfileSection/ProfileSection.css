@@ -78,6 +78,16 @@
   flex-direction: column;
   align-items: flex-start;
 }
+.upload-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  border-radius: 7px;
+  margin-top: 5px;
+  font-size: 15px;
+  height: 40px;
+}
 @media screen and (max-width: 768px) {
   .cover-picture{
     height: 20%;
