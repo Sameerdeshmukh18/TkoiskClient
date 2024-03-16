@@ -238,12 +238,17 @@ function ProfileSection() {
     return (
         <div className='ProfileSection' id='profileSection'>
             <div className="profile-details">
-                <div className="cover-picture">
-                    <img src={`${coverImageURL}?v=${coverImageVersion}`} alt="Cover Photo" />
+                <div className="cover-picture" 
+                    style={{ 
+                        backgroundImage: `url(${coverImageURL}?v=${coverImageVersion})`,
+                    }}
+                >
+                    <div className='cover-overlay'></div>
+                    <div className="profile-picture">
+                        <img src={`${profileImageURL}?v=${profileImageVersion}`} alt="Profile Photo" />
+                    </div>
                 </div>
-                <div className="profile-picture">
-                <img src={`${profileImageURL}?v=${profileImageVersion}`} alt="Profile Photo" />
-                </div>
+                <div className='profile-picture-cover-space'></div>
                 <div className="profile-card">
                     <div className="username-name">
                         <div className="profile-name"><b>{userDetails.name}</b></div>
