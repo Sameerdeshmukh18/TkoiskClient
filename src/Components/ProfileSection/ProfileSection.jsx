@@ -276,8 +276,8 @@ function ProfileSection() {
                     loader={
                         <>
                             <PostSkeleton />
-                            <PostSkeleton />
-                            <PostSkeleton />
+                            {/* <PostSkeleton />
+                            <PostSkeleton /> */}
                         </>
                     }
                     scrollableTarget="profileSection"
@@ -297,8 +297,8 @@ function ProfileSection() {
                         : (
                             <>
                                 <PostSkeleton />
-                                <PostSkeleton />
-                                <PostSkeleton />
+                                {/* <PostSkeleton />
+                                <PostSkeleton /> */}
                             </>
                         )}
                 </InfiniteScroll>

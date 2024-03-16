@@ -41,7 +41,6 @@
   cursor: pointer;
 }
 .profile-picture{
-  margin-top: -15%;
   margin-left: 20px;
   border-radius: 50%;
   overflow: hidden;
@@ -50,6 +49,7 @@
   display: flex;
   z-index: 2;
   border: 1px solid rgb(192, 193, 195);
+  transform: translate(0, -50%);
 }
 .profile-card{
   display: flex;
