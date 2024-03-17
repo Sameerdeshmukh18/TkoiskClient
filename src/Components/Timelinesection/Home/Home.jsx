@@ -28,7 +28,7 @@ function Home() {
             user {
               name
               username
-              isVertified
+              isVerified
             }
             tweet_text
             liked_by {
@@ -95,7 +95,7 @@ function Home() {
               user {
                   username
                   name
-                  isVertified
+                  isVerified
                   _id
               }
           }

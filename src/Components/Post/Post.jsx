@@ -99,7 +99,6 @@ function Post(props) {
     if (response.data.createComment._id) {
       setReplyText("");
       handleClose();
-      window.location.reload();
     }
   };
 

@@ -50,7 +50,7 @@ function ProfileSection() {
     const ME = gql`query Me {
         me {
           bio
-          isVertified
+          isVerified
           name
           username
           followers {
@@ -72,7 +72,7 @@ function ProfileSection() {
                   user {
                     name
                     username
-                    isVertified
+                    isVerified
                   }
                   tweet_text
                   liked_by {

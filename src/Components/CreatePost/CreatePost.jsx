@@ -47,7 +47,7 @@ function CreatePost() {
         user {
           name
           username
-          isVertified
+          isVerified
         }
         tweet_text
         liked_by {
