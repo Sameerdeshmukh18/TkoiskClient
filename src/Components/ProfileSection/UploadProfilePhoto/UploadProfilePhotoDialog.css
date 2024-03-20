@@ -1,0 +1,50 @@
+
+.upload-profile-photo-dialog-container {
+    position:fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 9999998;
+    display: flex;
+    justify-content: center;
+}
+.upload-profile-photo-dialog-container > div {
+    position: relative;
+}
+.upload-profile-photo-dialog {
+    padding: 15px;
+    border-radius: 15px;
+    z-index: 9999999;
+    background: white;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.3);
+    margin: 20px;
+    max-width: 400px;
+    min-width: 300px;
+}
+.upload-profile-photo-dialog > div {
+    margin: 10px 0px;
+}
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.btn-container button {
+    width: 150px;
+    border-radius: 10px;
+}
+.btn-container button:first-child {
+    margin-right: 10px;
+}
+#cropped-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+#cropped-image > img {
+    width: 100%;
+    height: 100%;
+}

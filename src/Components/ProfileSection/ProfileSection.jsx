@@ -6,6 +6,9 @@ import ApolloAPI from "../../ApiCllient";
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Post from "../Post/Post";
 import PostSkeleton from "../Post/PostSkeleton";
+import Cropper from 'react-easy-crop'
+import getCroppedImg from './CropImage'
+import UploadProfilePhotoDialog from './UploadProfilePhoto/UploadProfilePhotoDialog';
 
 function ProfileSection() {
 
@@ -15,6 +18,7 @@ function ProfileSection() {
     const [selectedCoverPhotoFile, setSelectedCoverPhotoFile] = useState(null)
     const COVER_PHOTO_KEY = 'CoverPhoto'
     const PROFILE_PHOTO_KEY = 'ProfilePhoto'
+    const [uploadProfilePhotoDialogState, setUploadProfilePhotoDialogState] = useState(false)
 
     const [myPostList, setMyPostList] = useState([]);
     const [cursor, setCursor] = useState();
@@ -167,25 +171,19 @@ function ProfileSection() {
         setSelectedCoverPhotoFile(file)
     };
 
-    // Handles when file is selected for profile photo
-    const handleProfileFileChange = (event) => {
-        const file = event.target.files[0]
-        setSelectedProfilePhotoFile(file)
-    }
-
     // Update the state variable to hold selected cover photo file and give to upload function
     const handleCoverPhotoUpload = () => {
         uploadToS3Bucket(selectedCoverPhotoFile, COVER_PHOTO_KEY)
-    }
-    // Update the state variable to hold selected profile photo file and give to upload function
-    const handleProfilePhotoUpload = () => {
-        uploadToS3Bucket(selectedProfilePhotoFile, PROFILE_PHOTO_KEY)
     }
 
     // Uploads the photo to s3 bucket
     const uploadToS3Bucket = (file, fileForDescription) => {
         if (!file) return
         const fileName = getFileName(fileForDescription)
+        console.log('FileName Below')
+        console.log(fileName)
+        console.log('File Below')
+        console.log(file)
         getPresignedURL(fileName, file.type)
             .then((presignedURL) => {
                 // Upload the file to S3 using the pre-signed URL
@@ -199,14 +197,14 @@ function ProfileSection() {
                     .then((res) => {
                         console.log('File Uploaded Successfully :)')
 
-                        if(fileForDescription == COVER_PHOTO_KEY) {
-                            setCoverImageVersion(coverImageVersion+1)
+                        if (fileForDescription == COVER_PHOTO_KEY) {
+                            setCoverImageVersion(coverImageVersion + 1)
                             setSelectedCoverPhotoFile(null)
                             localStorage.setItem('CoverPhotoVersion', coverImageVersion)
                         }
 
-                        if(fileForDescription == PROFILE_PHOTO_KEY) {
-                            setProfileImageVersion(profileImageVersion+1)
+                        if (fileForDescription == PROFILE_PHOTO_KEY) {
+                            setProfileImageVersion(profileImageVersion + 1)
                             setSelectedProfilePhotoFile(null)
                             localStorage.setItem('ProfilePhotoVersion', profileImageVersion)
                         }
@@ -228,6 +226,10 @@ function ProfileSection() {
         e.target.classList.add("active");
     };
 
+    const toggleProfilePhotoDialogState = () => {
+        setUploadProfilePhotoDialogState(prevState => !prevState)
+    }
+
     useEffect(() => {
         fetchUserDetails();
         fetchMoreData();
@@ -237,9 +239,16 @@ function ProfileSection() {
 
     return (
         <div className='ProfileSection' id='profileSection'>
+            {
+                uploadProfilePhotoDialogState &&
+                <UploadProfilePhotoDialog
+                    uploadToS3Bucket={uploadToS3Bucket}
+                    toggleProfilePhotoDialogState={toggleProfilePhotoDialogState}
+                />
+            }
             <div className="profile-details">
-                <div className="cover-picture" 
-                    style={{ 
+                <div className="cover-picture"
+                    style={{
                         backgroundImage: `url(${coverImageURL}?v=${coverImageVersion})`,
                     }}
                 >
@@ -247,6 +256,7 @@ function ProfileSection() {
                     <div className="profile-picture">
                         <img src={`${profileImageURL}?v=${profileImageVersion}`} alt="Profile Photo" />
                     </div>
+                    <button id='update-profile-photo' onClick={toggleProfilePhotoDialogState}>Update Profile Photo</button>
                 </div>
                 <div className='profile-picture-cover-space'></div>
                 <div className="profile-card">
@@ -255,12 +265,12 @@ function ProfileSection() {
                         <div className="profile-username">@{userDetails.username}</div>
                     </div>
 
+                    <hr />
                     {/* Below code is for testing the upload image functionality */}
                     <input type="file" onChange={handleCoverFileChange} />
                     <button onClick={handleCoverPhotoUpload} className='upload-btn'>Update Cover Photo</button>
                     <hr />
-                    <input type="file" onChange={handleProfileFileChange} />
-                    <button onClick={handleProfilePhotoUpload} className='upload-btn'>Update Profile Photo</button>
+
 
                     <div className="profile-bio">{userDetails.bio}</div>
                     <div className="connections-count">

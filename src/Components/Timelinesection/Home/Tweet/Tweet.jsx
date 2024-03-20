@@ -2,6 +2,8 @@ import React, { useRef } from 'react'
 import './Tweet.css'
 
 function Tweet(props) {
+
+    const imageBaseURL = 'https://tkiosk-users-data.s3.ap-south-1.amazonaws.com'
     const tweetHeaderControlRef = useRef(null)
     const tweet = props.tweet
     const time = '08:03 pm'
@@ -53,7 +55,7 @@ function Tweet(props) {
                 <div className='tweet'>
                     <div>
                         <div className='user-photo'>
-                            <div className='photo'>Photo</div>
+                            <img className='photo' src={`${imageBaseURL}/${tweet.user._id}/ProfilePhoto`}/>
                         </div>
                         <div className='user-name'>
                             <h4>{tweet.user.name}</h4>

@@ -3,6 +3,7 @@
   width: 45%;
   height: 100%;
   overflow: scroll;
+  position: relative;
 }
 .profile-details{
   height: 100%;
@@ -68,6 +69,7 @@
   position: absolute;
   bottom: 0;
   transform: translate(0, 50%);
+  background: white;
 }
 .profile-picture > img {
   width: 100%;
@@ -75,6 +77,18 @@
 }
 .profile-picture-cover-space {
   height: 85px;
+}
+#update-profile-photo {
+  position: absolute;
+  bottom: -65px;
+  left: 190px;
+  height: 40px;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  border-radius: 7px;
 }
 .profile-card{
   display: flex;
@@ -112,6 +126,20 @@
   margin-top: 5px;
   font-size: 15px;
   height: 40px;
+}
+
+.crop-container {
+  position: relative;
+  height: 200px;
+  width: 100%;
+}
+.cropped-image-container {
+  width: 200px;
+  height: 200px;
+}
+.cropped-image-container img {
+  width: 100%;
+  height: 100%;
 }
 @media screen and (max-width: 768px) {
   .cover-picture{
