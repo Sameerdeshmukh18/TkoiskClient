@@ -13,6 +13,7 @@ import UploadProfilePhotoDialog from './UploadProfilePhoto/UploadProfilePhotoDia
 function ProfileSection() {
 
     const imageBaseURL = 'https://tkiosk-users-data.s3.ap-south-1.amazonaws.com'
+    const defaultProfileImageURL = 'https://tkiosk-users-data.s3.ap-south-1.amazonaws.com/DefaultProfilePhoto.jpeg'
     const [userId, setUserId] = useState(localStorage.getItem('user_id'))
     const [selectedProfilePhotoFile, setSelectedProfilePhotoFile] = useState(null)
     const [selectedCoverPhotoFile, setSelectedCoverPhotoFile] = useState(null)
@@ -207,6 +208,7 @@ function ProfileSection() {
                             setProfileImageVersion(profileImageVersion + 1)
                             setSelectedProfilePhotoFile(null)
                             localStorage.setItem('ProfilePhotoVersion', profileImageVersion)
+                            setProfilePhotoLoaded(true)
                         }
                     })
                     .catch((err) => {
@@ -228,6 +230,12 @@ function ProfileSection() {
 
     const toggleProfilePhotoDialogState = () => {
         setUploadProfilePhotoDialogState(prevState => !prevState)
+    }
+
+    const [profilePhotoLoaded, setProfilePhotoLoaded] = useState(true)
+
+    const handleProfilePhotoError = () => {
+        setProfilePhotoLoaded(false)
     }
 
     useEffect(() => {
@@ -254,7 +262,14 @@ function ProfileSection() {
                 >
                     <div className='cover-overlay'></div>
                     <div className="profile-picture">
-                        <img src={`${profileImageURL}?v=${profileImageVersion}`} alt="Profile Photo" />
+                        {
+                            profilePhotoLoaded 
+                            ? 
+                            <img src={`${profileImageURL}?v=${profileImageVersion}`} alt="Profile Photo" onError={handleProfilePhotoError}/>
+                            :
+                            <img src={defaultProfileImageURL} />
+                        }
+                        
                     </div>
                     <button id='update-profile-photo' onClick={toggleProfilePhotoDialogState}>Update Profile Photo</button>
                 </div>
